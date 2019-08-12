@@ -14,7 +14,37 @@ namespace Articles.Models
         public virtual int Id { get; set; }
         [Property]
         public virtual string Name { get; set; }
-        [Property]
-        public virtual int? IdParent { get; set; }
+
+        [Bag(0, Name = "Clauses", Inverse = true)]
+        [Key(1, Column = "IdParent")]
+        [OneToMany(2, ClassType = typeof(Clauses))]
+        private IList<Clauses> _clauses;
+        public virtual IList<Clauses> Clauses
+        {
+            get
+            {
+                return _clauses ?? (_clauses = new List<Clauses>());
+            }
+            set { _clauses = value; }
+        }
+
+        //Родительский элемент
+        [ManyToOne(Name = "Parent", Column = "IdParent",
+         ClassType = typeof(Cataloges), Cascade = "save-update")]
+        public virtual Cataloges Parent { get; set; }
+
+        //Дочерние элементы
+        [Bag(0, Name = "Children", Inverse = true)]
+        [Key(1, Column = "IdParent")]
+        [OneToMany(2, ClassType = typeof(Clauses))]
+        private IList<Clauses> _children;
+        public virtual IList<Clauses> Children
+        {
+            get
+            {
+                return _children ?? (_children = new List<Clauses>());
+            }
+            set { _children = value; }
+        }
     }
 }

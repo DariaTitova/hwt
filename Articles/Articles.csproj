@@ -218,6 +218,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cataloges.cs" />
+    <Compile Include="Models\Clauses.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="NHibernateHelper.cs" />
