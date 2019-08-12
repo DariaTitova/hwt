@@ -10,6 +10,7 @@ namespace Articles.Controllers
     {
         public ActionResult Index()
         {
+            var session = NHibernateHelper.OpenSession();
             return View();
         }
 
