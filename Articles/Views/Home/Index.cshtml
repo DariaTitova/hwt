@@ -20,7 +20,7 @@
         </ul>
     </div>
     <div class="col-md-8" id="linkResult">
-        @{Html.RenderPartial("ClausesPartial", Model);}
+        @{Html.RenderPartial("Clauses", Model);}
     </div>
 
 </div>
@@ -29,12 +29,5 @@
 
 
 <script src="~/Scripts/myjs.js" language="javascript" type="text/javascript"></script>
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $(".link").click(function () {
-            var Id = $("#link").val();
-            $("#linkResult").load('@(Url.Action("Clauses","Home",null, Request.Url.Scheme))?clausesId=' + Id);
-        });
-    });
-</script>
+<script src="~/Scripts/Openpartitial.js" language="javascript" type="text/javascript"></script>
+ 

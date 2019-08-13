@@ -9,5 +9,6 @@ namespace Articles.Scripts
     {
         string Head();
         string Body();
+        string GetLink();
     }
 }

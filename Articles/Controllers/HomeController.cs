@@ -27,8 +27,6 @@ namespace Articles.Controllers
             ninjectKernel.Bind<IParentItem>().To<CatalogesItems>()
                 .WithConstructorArgument("cataloge", session.Query<Cataloges>().ToList().First()); 
             parent = ninjectKernel.Get<IParentItem>();
-
-
         }
 
         [HttpGet]
@@ -44,18 +42,13 @@ namespace Articles.Controllers
         {
             var  Id = int.Parse(ClausesId);
             var model = await this.GetView(Id);
-            return PartialView("linkResult", model);
-
+            return PartialView("Clauses", model);
         }
 
 
         private async Task<Clauses> GetView(int ClausesId = 0)
         {
             UpdateMenu();
-            
-
-            // ViewBag.Clauses = new HtmlString(generator2.GenerateArticle());
-
             return FindClauses(ClausesId); 
         }
 
