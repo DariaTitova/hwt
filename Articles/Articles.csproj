@@ -220,6 +220,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Items\CatalogesItems.cs" />
+    <Compile Include="Items\ClausesItems.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cataloges.cs" />
     <Compile Include="Models\Clauses.cs" />

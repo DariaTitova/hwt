@@ -1,4 +1,5 @@
 ﻿using Articles.interfaces;
+using Articles.Models;
 using Articles.Scripts;
 using System;
 using System.Collections.Generic;
@@ -9,30 +10,36 @@ namespace Articles.Items
 {
     public class CatalogesItems : IParentItem
     {
-
+        private Cataloges cataloge;
+        private ICollection<IMenyItem> children;
+        public CatalogesItems(Cataloges cataloge)
+        {
+            this.cataloge = cataloge;
+            children = cataloge.Children.Select(ch=>new ClausesItems(ch)as IMenyItem).ToList();
+        }
         public void Add(IMenyItem child)
         {
-            throw new NotImplementedException();
+            children.Add(child);
         }
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return children.Count();
         }
 
         public string Name()
         {
-            throw new NotImplementedException();
+           return cataloge.Name;
         }
 
         public void Remove(IMenyItem child)
         {
-            throw new NotImplementedException();
+            children.Remove(child);
         }
 
         public List<IMenyItem> ToList()
         {
-            throw new NotImplementedException();
+            return children.ToList();
         }
     }
 }
