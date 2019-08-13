@@ -1,4 +1,5 @@
-﻿using Articles.Scripts;
+﻿using Articles.interfaces;
+using Articles.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace Articles.Abstractions
 {
     public class HtmlGenerator
     {
-        private readonly AbstractParentItem root;
+        private readonly IParentItem root;
 
-        public HtmlGenerator(AbstractParentItem root)
+        public HtmlGenerator(IParentItem root)
         {
             this.root = root;
         }
@@ -62,18 +63,18 @@ namespace Articles.Abstractions
             return returnHtml.ToString();
         }
 
-        private string ChildHtml(AbstractMenyItem item)
+        private string ChildHtml(IMenyItem item)
         {
-            return $"<li>{item.Name}</li>";
+            return $"<li>{item.Name()}</li>";
         }
 
-        private string ParentHtml(AbstractParentItem item)
+        private string ParentHtml(IParentItem item)
         {
-            StringBuilder html = new StringBuilder($"<li> <span class='caret'>{item.Name}</span>  <ul class='nested'>");
+            StringBuilder html = new StringBuilder($"<li> <span class='caret'>{item.Name()}</span>  <ul class='nested'>");
             foreach (var child in item.ToList())
             {
-                if (child is AbstractParentItem)
-                    html.Append(ParentHtml((AbstractParentItem)child));
+                if (child is IParentItem)
+                    html.Append(ParentHtml((IParentItem)child));
                 else
                     html.Append(ChildHtml(child));               
             }
