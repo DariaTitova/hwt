@@ -36,13 +36,13 @@ namespace Articles.Models
         //Дочерние элементы
         [Bag(0, Name = "Children", Inverse = true)]
         [Key(1, Column = "IdParent")]
-        [OneToMany(2, ClassType = typeof(Clauses))]
-        private IList<Clauses> _children;
-        public virtual IList<Clauses> Children
+        [OneToMany(2, ClassType = typeof(Cataloges))]
+        private IList<Cataloges> _children;
+        public virtual IList<Cataloges> Children
         {
             get
             {
-                return _children ?? (_children = new List<Clauses>());
+                return _children ?? (_children = new List<Cataloges>());
             }
             set { _children = value; }
         }

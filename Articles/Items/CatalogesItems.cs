@@ -15,7 +15,11 @@ namespace Articles.Items
         public CatalogesItems(Cataloges cataloge)
         {
             this.cataloge = cataloge;
-            children = cataloge.Children.Select(ch=>new ClausesItems(ch)as IMenyItem).ToList();
+            var childrenCataloges = cataloge.Children.Select(ch => new CatalogesItems(ch) as IMenyItem).ToList();
+            var childrenClauses = cataloge.Clauses.Select(ch => new ClausesItems(ch) as IMenyItem).ToList();
+           
+
+            children = childrenClauses.Concat(childrenCataloges).ToList(); 
         }
         public void Add(IMenyItem child)
         {

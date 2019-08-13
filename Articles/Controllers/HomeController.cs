@@ -1,4 +1,6 @@
 ﻿using Articles.Abstractions;
+using Articles.interfaces;
+using Articles.Items;
 using Articles.Models;
 using System;
 using System.Collections.Generic;
@@ -12,15 +14,15 @@ namespace Articles.Controllers
     {
         public ActionResult Index()
         {
-            //var session = NHibernateHelper.OpenSession();
+            var session = NHibernateHelper.OpenSession();
             //session.Save(new Cataloges()
             //{
             //    Name = "root1"
             //});
-
-
-            //HtmlGenerator generator = new HtmlGenerator()
-           // ViewBag.Meny
+            Cataloges cataloge = session.Query<Cataloges>().ToList().First();
+            IParentItem parent = new CatalogesItems(cataloge);
+            HtmlGenerator generator = new HtmlGenerator(parent);
+            ViewBag.Meny = new HtmlString(generator.GenerateMeny());
 
             return View();
         }
