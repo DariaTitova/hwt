@@ -28,5 +28,10 @@ namespace Articles.Scripts
         {
             return children.ToList();
         }
+
+        public int Count()
+        {
+            return children.Count();
+        }
     }
 }

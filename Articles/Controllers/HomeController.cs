@@ -11,26 +11,17 @@ namespace Articles.Controllers
     {
         public ActionResult Index()
         {
-            var session = NHibernateHelper.OpenSession();
-            session.Save(new Cataloges()
-            {
-                Name = "root1"
-            });
-            return View();
-        }
+            //var session = NHibernateHelper.OpenSession();
+            //session.Save(new Cataloges()
+            //{
+            //    Name = "root1"
+            //});
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+
 
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+ 
     }
 }
