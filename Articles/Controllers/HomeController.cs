@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Articles.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,10 @@ namespace Articles.Controllers
         public ActionResult Index()
         {
             var session = NHibernateHelper.OpenSession();
+            session.Save(new Cataloges()
+            {
+                Name = "root1"
+            });
             return View();
         }
 
