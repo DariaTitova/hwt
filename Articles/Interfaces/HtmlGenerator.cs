@@ -27,7 +27,7 @@ namespace Articles.Abstractions
 
         private string ChildHtml(IMenyItem item)
         {
-            return $"<li>{item.Name()}</li>";
+            return $"<li class='link'>{item.Name()}</li>";
         }
 
         private string ParentHtml(IParentItem item)

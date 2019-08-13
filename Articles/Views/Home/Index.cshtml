@@ -1,29 +1,40 @@
-﻿@using Articles.Scripts
+﻿@model Articles.Models.Clauses
 @{
     ViewBag.Title = "Home Page";
 }
 
- 
+
 
 <div class="row">
     <div class="col-md-4">
-       
+
         <ul id="myUL">
             <li>
                 <a>Вход</a>
             </li>
             <li>
                 <a>Регистрация</a>
-            </li>   
-                @ViewBag.Meny
+            </li>
+            @ViewBag.Meny
 
         </ul>
     </div>
-    <div class="col-md-8">
-        @ViewBag.Clauses
+    <div class="col-md-8" id="linkResult">
+        @{Html.RenderPartial("ClausesPartial", Model);}
     </div>
-   
+
 </div>
 
 
+
+
 <script src="~/Scripts/myjs.js" language="javascript" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".link").click(function () {
+            var Id = $("#link").val();
+            $("#linkResult").load('@(Url.Action("Clauses","Home",null, Request.Url.Scheme))?clausesId=' + Id);
+        });
+    });
+</script>

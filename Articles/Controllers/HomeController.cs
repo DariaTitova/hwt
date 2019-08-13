@@ -9,7 +9,8 @@ using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
- using System.Web;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Articles.Controllers
@@ -26,30 +27,50 @@ namespace Articles.Controllers
             ninjectKernel.Bind<IParentItem>().To<CatalogesItems>()
                 .WithConstructorArgument("cataloge", session.Query<Cataloges>().ToList().First()); 
             parent = ninjectKernel.Get<IParentItem>();
+
+
         }
-        public ActionResult Index()
+
+        [HttpGet]
+        public async Task<ActionResult> Index()
         {
-            session = NHibernateHelper.OpenSession();
-            //session.Save(new Cataloges()
-            //{
-            //    Name = "root1"
-            //});
-
-  
-            HtmlGenerator generator = new HtmlGenerator(parent);
-
-            ViewBag.Meny = new HtmlString(generator.GenerateMeny());
+            var model = await this.GetView();
+            return this.View(model);
+         }
 
 
-            Clauses clause = session.Query<Clauses>().ToList().First();
-            IShownItem item = new ClausesItems(clause);
-            HtmlGeneratorArticles generator2 = new HtmlGeneratorArticles(item);
+        [HttpGet]
+        public async Task<ActionResult> Clauses(string ClausesId)
+        {
+            var  Id = int.Parse(ClausesId);
+            var model = await this.GetView(Id);
+            return PartialView("linkResult", model);
 
-            ViewBag.Clauses = new HtmlString(generator2.GenerateArticle());
-
-            return View();
         }
 
- 
+
+        private async Task<Clauses> GetView(int ClausesId = 0)
+        {
+            UpdateMenu();
+            
+
+            // ViewBag.Clauses = new HtmlString(generator2.GenerateArticle());
+
+            return FindClauses(ClausesId); 
+        }
+
+        private void UpdateMenu()
+        {
+            HtmlGenerator generator = new HtmlGenerator(parent);
+            ViewBag.Meny = new HtmlString(generator.GenerateMeny());
+        }
+
+        private Clauses FindClauses(int id)
+        {
+            return session.Query<Clauses>().Where(c => c.Id == id).FirstOrDefault();
+        }
+
+
+
     }
 }
