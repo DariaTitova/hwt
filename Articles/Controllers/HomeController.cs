@@ -1,4 +1,5 @@
-﻿using Articles.Models;
+﻿using Articles.Abstractions;
+using Articles.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Articles.Controllers
             //});
 
 
+            //HtmlGenerator generator = new HtmlGenerator()
+           // ViewBag.Meny
 
             return View();
         }
