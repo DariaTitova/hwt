@@ -18,45 +18,6 @@ namespace Articles.Abstractions
             this.root = root;
         }
 
-        // <li>
-        //    <span class="caret">Каталог статей</span>
-        //    <ul class="nested">
-        //        <li>Cтатья</li>
-        //        <li>Статья</li>
-        //        <li>
-        //            <span class="caret">Еще каталог</span>
-        //            <ul class="nested">
-        //                <li>Black Tea</li>
-        //                <li>White Tea</li>
-        //                <li>
-        //                    <span class="caret">Green Tea</span>
-        //                    <ul class="nested">
-        //                        <li>Sencha</li>
-        //                        <li>Gyokuro</li>
-        //                        <li>Matcha</li>
-        //                        <li>Pi Lo Chun</li>
-        //                    </ul>
-        //                </li>
-        //            </ul>
-        //        </li>
-        //        <li>
-        //            <span class="caret">Еще каталог</span>
-        //            <ul class="nested">
-        //                <li>Black Tea</li>
-        //                <li>White Tea</li>
-        //                <li>
-        //                    <span class="caret">Green Tea</span>
-        //                    <ul class="nested">
-        //                        <li>Sencha</li>
-        //                        <li>Gyokuro</li>
-        //                        <li>Matcha</li>
-        //                        <li>Pi Lo Chun</li>
-        //                    </ul>
-        //                </li>
-        //            </ul>
-        //        </li>
-        //    </ul>
-        //</li>
         public string GenerateMeny()
         {
             StringBuilder returnHtml = new StringBuilder();
@@ -81,9 +42,6 @@ namespace Articles.Abstractions
             }
             html.Append("</ul></li>");
             return html.ToString();
-        }
-
-
-        
+        }      
     }
 }

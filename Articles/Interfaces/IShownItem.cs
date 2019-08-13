@@ -7,6 +7,7 @@ namespace Articles.Scripts
 {
     public interface IShownItem
     {
-        string Load();
+        string Head();
+        string Body();
     }
 }
