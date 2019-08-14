@@ -3,6 +3,7 @@ using Articles.Items;
 using Articles.Models;
 using NHibernate;
 using Ninject;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,16 +13,20 @@ namespace Articles.Controllers
 {
     public class HomeController : Controller
     {
-        IParentItem parent;
+        List<IParentItem> roots;
         ISession session;
         public HomeController()
         {
-           session = NHibernateHelper.OpenSession();
-
+            session = NHibernateHelper.OpenSession();
+            roots = new List<IParentItem>();
             IKernel ninjectKernel = new StandardKernel();
-            ninjectKernel.Bind<IParentItem>().To<CatalogesItems>()
-                .WithConstructorArgument("cataloge", session.Query<Cataloges>().ToList().First()); 
-            parent = ninjectKernel.Get<IParentItem>();
+            foreach(var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
+            {
+                ninjectKernel.Bind<IParentItem>().To<CatalogesItems>()
+                   .WithConstructorArgument("cataloge", cataloge);
+                roots.Add(ninjectKernel.Get<IParentItem>());
+            }
+
         }
 
         [HttpGet]
@@ -49,7 +54,7 @@ namespace Articles.Controllers
 
         private void UpdateMenu()
         {
-            HtmlGenerator generator = new HtmlGenerator(parent);
+            HtmlGeneratorMeny generator = new HtmlGeneratorMeny(roots);
             ViewBag.Meny = new HtmlString(generator.GenerateMeny());
         }
 

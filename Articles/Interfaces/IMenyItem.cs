@@ -4,6 +4,5 @@
     {
         string MenyText();
         string Name();
-        string HtmlTag();
     }
 }

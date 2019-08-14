@@ -27,11 +27,6 @@ namespace Articles.Items
             return "Clauses?id=" + clause.Id;
         }
 
-        public string HtmlTag()
-        {
-            return "a";
-        }
-
         public string MenyText()
         {
             return clause.Name;

@@ -7,17 +7,7 @@
 
 <div class="row">
     <div class="col-md-4">
-
-        <ul id="myUL">
-            <li>
-                <a>Вход</a>
-            </li>
-            <li>
-                <a>Регистрация</a>
-            </li>
-            @ViewBag.Meny
-
-        </ul>
+        @{Html.RenderPartial("MenyPartial");}
     </div>
     <div class="col-md-8" id="linkResult">
         @{Html.RenderPartial("Clauses", Model);}

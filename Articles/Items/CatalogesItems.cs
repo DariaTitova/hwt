@@ -2,6 +2,7 @@
 using Articles.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace Articles.Items
 {
@@ -28,14 +29,9 @@ namespace Articles.Items
             return children.Count();
         }
 
-        public string HtmlTag()
-        {
-            throw null;
-        }
-
         public string MenyText()
         {
-            return cataloge.Name;
+            return $"<span class='caret'>{cataloge.Name}</span>";
         }
 
         public string Name()
@@ -46,6 +42,11 @@ namespace Articles.Items
         public void Remove(IMenyItem child)
         {
             children.Remove(child);
+        }
+
+        public TagBuilder TagInMeny()
+        {
+            throw new System.NotImplementedException();
         }
 
         public List<IMenyItem> ToList()
