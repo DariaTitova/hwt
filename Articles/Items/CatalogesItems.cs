@@ -1,10 +1,7 @@
 ﻿using Articles.interfaces;
 using Articles.Models;
-using Articles.Scripts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Articles.Items
 {
@@ -31,9 +28,19 @@ namespace Articles.Items
             return children.Count();
         }
 
+        public string HtmlTag()
+        {
+            throw null;
+        }
+
+        public string MenyText()
+        {
+            return cataloge.Name;
+        }
+
         public string Name()
         {
-           return cataloge.Name;
+           return "каталог";
         }
 
         public void Remove(IMenyItem child)

@@ -1,7 +1,9 @@
 ﻿namespace Articles.interfaces
 {
-    public interface  IMenyItem
+     public interface IMenyItem
     {
+        string MenyText();
         string Name();
+        string HtmlTag();
     }
 }

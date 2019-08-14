@@ -21,14 +21,29 @@ namespace Articles.Items
             return clause.Text;
         }
 
+        public string GetLink()
+        {
+            return "Clauses?id=" +clause.Id;
+        }
+
         public string Head()
+        {
+            return clause.Name;
+        }
+
+        public string HtmlTag()
+        {
+            return "a";
+        }
+
+        public string MenyText()
         {
             return clause.Name;
         }
 
         public string Name()
         {
-            return clause.Name;
+            return "cтатья";
         }
     }
 }
