@@ -12,21 +12,6 @@ namespace Articles.Items
             this.clause = clause;
         }
 
-        public string Body()
-        {
-            return clause.Text;
-        }
-
-        public string Head()
-        {
-            return clause.Name;
-        }
-
-        public string HrefToShow()
-        {
-            return "Clauses?id=" + clause.Id;
-        }
-
         public string MenyText()
         {
             return clause.Name;
@@ -37,9 +22,11 @@ namespace Articles.Items
             return "cтатья";
         }
 
-        public View ShowView()
+ 
+        public string View()
         {
-            throw new System.NotImplementedException();
+ 
+            return "/Home/Clauses?clausesId=" + clause.Id;
         }
     }
 }

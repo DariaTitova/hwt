@@ -38,8 +38,8 @@ namespace Articles.Interfaces
 
             if (item is IShownItem)
             {
-                //htmlTag.MergeAttribute("src", src);
-                //htmlTag.MergeAttribute("alt", alt);
+                IShownItem shown = (IShownItem)item;
+                htmlTag.MergeAttribute("onclick", "openPartial('"+shown.View()+"')");
             }
 
             if (item is IEditableItem)
@@ -50,16 +50,15 @@ namespace Articles.Interfaces
 
             if (item is IParentItem)
             {
-                TagBuilder innerhtmlTag = new TagBuilder("ul");
+                IParentItem parent = (IParentItem)item;
 
-                foreach (var child in ((IParentItem)item).ToList())
+                TagBuilder innerhtmlTag = new TagBuilder("ul");
+                innerhtmlTag.AddCssClass("nested");
+
+                foreach (var child in parent.ToList())
                     innerhtmlTag.InnerHtml += BuildHtml(child);
 
                 htmlTag.InnerHtml += innerhtmlTag;
-            }
-            else
-            {
-                htmlTag.AddCssClass("link");
             }
 
             return htmlTag.ToString();

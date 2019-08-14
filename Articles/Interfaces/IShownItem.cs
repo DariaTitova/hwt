@@ -8,7 +8,6 @@ namespace Articles.Interfaces
 {
     public interface IShownItem
     {
-        string HrefToShow();
-        View ShowView();
+        string View();
     }
 }
