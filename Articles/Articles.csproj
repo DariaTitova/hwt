@@ -223,6 +223,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Generators\HtmlGeneratorArticles.cs" />
+    <Compile Include="Interfaces\IEditableItem.cs" />
     <Compile Include="Items\CatalogesItems.cs" />
     <Compile Include="Items\ClausesItems.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

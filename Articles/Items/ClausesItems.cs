@@ -1,4 +1,5 @@
-﻿using Articles.Interfaces;
+﻿using System.Web.UI.WebControls;
+using Articles.Interfaces;
 using Articles.Models;
 
 namespace Articles.Items
@@ -16,14 +17,14 @@ namespace Articles.Items
             return clause.Text;
         }
 
-        public string GetLink()
-        {
-            return "Clauses?id=" +clause.Id;
-        }
-
         public string Head()
         {
             return clause.Name;
+        }
+
+        public string HrefToShow()
+        {
+            return "Clauses?id=" + clause.Id;
         }
 
         public string HtmlTag()
@@ -39,6 +40,11 @@ namespace Articles.Items
         public string Name()
         {
             return "cтатья";
+        }
+
+        public View ShowView()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
