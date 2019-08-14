@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Articles.Scripts
+namespace Articles.Interfaces
 {
     public interface IShownItem
     {

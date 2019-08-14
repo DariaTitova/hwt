@@ -1,4 +1,4 @@
-﻿namespace Articles.interfaces
+﻿namespace Articles.Interfaces
 {
      public interface IMenyItem
     {

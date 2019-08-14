@@ -1,13 +1,8 @@
-﻿using Articles.Abstractions;
-using Articles.interfaces;
-using Articles.Interfaces;
+﻿using Articles.Interfaces;
 using Articles.Items;
 using Articles.Models;
-using Articles.Scripts;
 using NHibernate;
 using Ninject;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;

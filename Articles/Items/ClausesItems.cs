@@ -1,10 +1,5 @@
-﻿using Articles.interfaces;
+﻿using Articles.Interfaces;
 using Articles.Models;
-using Articles.Scripts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Articles.Items
 {

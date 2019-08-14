@@ -210,7 +210,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\HtmlGenerator.cs" />
+    <Compile Include="Generators\HtmlGenerator.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -222,7 +222,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\HtmlGeneratorArticles.cs" />
+    <Compile Include="Generators\HtmlGeneratorArticles.cs" />
     <Compile Include="Items\CatalogesItems.cs" />
     <Compile Include="Items\ClausesItems.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

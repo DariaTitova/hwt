@@ -1,13 +1,6 @@
-﻿using Articles.interfaces;
-using Articles.Scripts;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Web;
+﻿using System.Text;
 
-namespace Articles.Abstractions
+namespace Articles.Interfaces
 {
     public class HtmlGenerator
     {

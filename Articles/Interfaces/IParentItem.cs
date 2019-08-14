@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Articles.interfaces
+namespace Articles.Interfaces
 {
     public interface IParentItem: IMenyItem
     {
