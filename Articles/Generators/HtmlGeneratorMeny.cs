@@ -56,8 +56,8 @@ namespace Articles.Interfaces
 
             if (item is IEditableItem)
             {
-                //htmlTag.MergeAttribute("src", src);
-                //htmlTag.MergeAttribute("alt", alt);
+                htmlTag.InnerHtml += ButtonEdit();
+                htmlTag.InnerHtml += ButtonDelete();
             }
            
 
@@ -98,10 +98,51 @@ namespace Articles.Interfaces
             tag.InnerHtml += a;
 
             return tag;
-
-
         }
 
+
+        private TagBuilder ButtonEdit()
+        {
+            var ptag = new TagBuilder("p");
+            ptag.MergeAttribute("data - toggle", "tooltip");
+            ptag.MergeAttribute("title", "Изменить");
+
+
+            var buttontag = new TagBuilder("button");
+            buttontag.AddCssClass("btn btn-primary btn-xs");
+            buttontag.MergeAttribute("data-title", "Изменить");
+            buttontag.MergeAttribute("data-toggle", "modal");
+            buttontag.MergeAttribute("data-target", "#edit");
+
+            var spantag = new TagBuilder("span");
+            spantag.AddCssClass("glyphicon glyphicon-pencil");
+
+            buttontag.InnerHtml += spantag;
+
+            ptag.InnerHtml += buttontag;
+
+            return ptag;
+        }
+
+        private TagBuilder ButtonDelete()
+        {
+   
+
+
+            var buttontag = new TagBuilder("button");
+            buttontag.AddCssClass("btn btn-danger btn-xs");//
+            buttontag.MergeAttribute("data-title", "Удалить");//
+            buttontag.MergeAttribute("data-toggle", "modal");
+            buttontag.MergeAttribute("data-target", "#delete");//
+
+            var spantag = new TagBuilder("span");
+            spantag.AddCssClass("glyphicon glyphicon-trash");//
+
+            buttontag.InnerHtml += spantag;
+
+ 
+            return buttontag;
+        }
 
 
     }
