@@ -21,73 +21,60 @@ namespace Articles.Interfaces
 
             if (rootsItems.Count > 0)
                 foreach (var root in rootsItems)
+                {
                     returnHtml.Append(BuildHtml(root));
+
+                    var divider = new TagBuilder("li");
+                    divider.AddCssClass("divider");
+                    returnHtml.Append ( divider);
+                }
 
             return returnHtml.ToString();
         }
 
 
-        //<div style = "overflow-y: scroll; overflow-x: hidden; height: 500px;" >
-        //        < ul class="nav nav-list">
-        //            <li><label class="tree-toggler nav-header">Header 1</label>
-        //                <ul class="nav nav-list tree">
-        //                    <li><a href = "#" > Link </ a ></ li >
-        //                    < li >< a href="#">Link</a></li>
-        //                    <li><label class="tree-toggler nav-header">Header 1.1</label>
-        //                        <ul class="nav nav-list tree">
-        //                            <li><a href = "#" > Link </ a ></ li >
-        //                            < li >< a href="#">Link</a></li>
-        //                            <li><label class="tree-toggler nav-header">Header 1.1.1</label>
-        //                                <ul class="nav nav-list tree">
-        //                                    <li><a href = "#" > Link </ a ></ li >
-        //                                    < li >< a href="#">Link</a></li>
-        //                                </ul>
-        //                            </li>
-        //                        </ul>
-        //                    </li>
-        //                </ul>
-        //            </li>
-        //            <li class="divider"></li>
-        //            <li><label class="tree-toggler nav-header">Header 2</label>
-        //                <ul class="nav nav-list tree">
-        //                    <li><a href = "#" > Link </ a ></ li >
-        //                    < li >< a href="#">Link</a></li>
-        //                    <li><label class="tree-toggler nav-header">Header 2.1</label>
-        //                        <ul class="nav nav-list tree">
-        //                            <li><a href = "#" > Link </ a ></ li >
-        //                            < li >< a href="#">Link</a></li>
-        //                            <li><label class="tree-toggler nav-header">Header 2.1.1</label>
-        //                                <ul class="nav nav-list tree">
-        //                                    <li><a href = "#" > Link </ a ></ li >
-        //                                    < li >< a href="#">Link</a></li>
-        //                                </ul>
-        //                            </li>
-        //                        </ul>
-        //                    </li>
-        //                    <li><label class="tree-toggler nav-header">Header 2.2</label>
-        //                        <ul class="nav nav-list tree">
-        //                            <li><a href = "#" > Link </ a ></ li >
-        //                            < li >< a href="#">Link</a></li>
-        //                            <li><label class="tree-toggler nav-header">Header 2.2.1</label>
-        //                                <ul class="nav nav-list tree">
-        //                                    <li><a href = "#" > Link </ a ></ li >
-        //                                    < li >< a href="#">Link</a></li>
-        //                                </ul>
-        //                            </li>
-        //                        </ul>
-        //                    </li>
-        //                </ul>
-        //            </li>
-        //        </ul>
-        //    </div>
+        // <li>
+        //    <label class="tree-toggle nav-header glyphicon-icon-rpad">
+        //        <span class="glyphicon glyphicon-folder-close m5"></span>Bootstrap
+        //        <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span>
+        //    </label>
+        //    <ul class="nav nav-list tree bullets">
+        //        <li><a href = "#" > JavaScript </ a ></ li >
+        //        < li >< a href="#">CSS<span class="badge">42</span></a></li>
+        //        <li>
+        //            <label class="tree-toggle nav-header">Buttons</label>
+        //            <ul class="nav nav-list tree">
+        //                <li><a href = "#" > Colors </ a ></ li >
+        //                < li >< a href="#">Sizes</a></li>
+        //                <li>
+        //                    <label class="tree-toggle nav-header">Forms</label>
+        //                    <ul class="nav nav-list tree">
+        //                        <li><a href = "#" > Horizontal </ a ></ li >
+        //                        < li >< a href="#">Vertical</a></li>
+        //                    </ul>
+        //                </li>
+        //            </ul>
+        //        </li>
+        //    </ul>
+        //</li>
+        //<li class="divider"></li>
 
         //IParentItem для элементов, у которых есть вложенные элементы
         //IShownItm для элементов, которые можно открывать в правом окне
         //IEditebleItem для элементов, которые можно редактировать
         private string BuildHtml(IMenyItem item)
         {
-            TagBuilder htmlTag = new TagBuilder("li");
+            TagBuilder htmlTag;
 
+            if (item is IParentItem)
+            {
+                htmlTag= ParentTag((IParentItem)item);
+
+            }
+            else
+            {
+                htmlTag = ChildTag(item);
+            }
 
             if (item is IShownItem)
             {
@@ -100,30 +87,47 @@ namespace Articles.Interfaces
                 //htmlTag.MergeAttribute("src", src);
                 //htmlTag.MergeAttribute("alt", alt);
             }
-
-            if (item is IParentItem)
-            {
-                IParentItem parent = (IParentItem)item;
-
-                var label = new TagBuilder("label");
-                label.AddCssClass("tree - toggler nav - header");
-                label.SetInnerText(item.MenyText());
-                htmlTag.InnerHtml += label;
-
-
-                TagBuilder innerhtmlTag = new TagBuilder("ul");
-                innerhtmlTag.AddCssClass("nav nav-list tree");
-                foreach (var child in parent.ToList())
-                    innerhtmlTag.InnerHtml += BuildHtml(child);
-                htmlTag.InnerHtml += innerhtmlTag;
-
-            }
-            else
-            {
-                htmlTag.SetInnerText(item.MenyText());
-            }
+           
 
             return htmlTag.ToString();
+        }
+
+        private TagBuilder ParentTag(IParentItem parent)
+        {
+
+            var tag = new TagBuilder("li");
+
+            var label = new TagBuilder("label");
+            label.AddCssClass("tree-toggle nav-header glyphicon-icon-rpad");
+            label.SetInnerText(parent.MenyText());
+            tag.InnerHtml += label;
+
+
+            TagBuilder innerhtmlTag = new TagBuilder("ul");
+            innerhtmlTag.AddCssClass("nav nav-list tree bullets");
+            foreach (var child in parent.ToList())
+                innerhtmlTag.InnerHtml += BuildHtml(child);
+
+            tag.InnerHtml += innerhtmlTag;
+
+            return tag;
+
+         }
+
+
+        private TagBuilder ChildTag(IMenyItem item)
+        {
+            var tag = new TagBuilder("li");
+
+            var a = new TagBuilder("a");
+            a.MergeAttribute("href", "#");
+            a.SetInnerText(item.MenyText());
+
+            tag.InnerHtml += a;
+
+            return tag;
+
+
         }
 
 

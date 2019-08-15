@@ -1,65 +1,111 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿    
+
+ 
+ 
+
+
+.no-padding {
+    padding: 0px;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
+.glyphicon-icon-rpad .glyphicon, .glyphicon-icon-rpad .glyphicon.m8, .fa-icon-rpad .fa, .fa-icon-rpad .fa.m8 {
+    padding-right: 8px;
+}
+
+.glyphicon-icon-lpad .glyphicon, .glyphicon-icon-lpad .glyphicon.m8, .fa-icon-lpad .fa, .fa-icon-lpad .fa.m8 {
+    padding-left: 8px;
+}
+
+.glyphicon-icon-rpad .glyphicon.m5, .fa-icon-rpad .fa.m5 {
+    padding-right: 5px;
+}
+
+.glyphicon-icon-lpad .glyphicon.m5, .fa-icon-lpad .fa.m5 {
+    padding-left: 5px;
+}
+
+.glyphicon-icon-rpad .glyphicon.m12, .fa-icon-rpad .fa.m12 {
+    padding-right: 12px;
+}
+
+.glyphicon-icon-lpad .glyphicon.m12, .fa-icon-lpad .fa.m12 {
+    padding-left: 12px;
+}
+
+.glyphicon-icon-rpad .glyphicon.m15, .fa-icon-rpad .fa.m15 {
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 300px;
+.glyphicon-icon-lpad .glyphicon.m15, .fa-icon-lpad .fa.m15 {
+    padding-left: 15px;
 }
 
 
-/* Remove default bullets */
-ul, #myUL {
-    list-style-type: none;
+
+ul.nav-menu-list-style .nav-header .menu-collapsible-icon{
+    position: absolute;
+    right: 3px;
+    top: 16px;
+    font-size: 9px;
+    width:100%;
 }
 
-/* Remove margins and padding from the parent ul */
-#myUL {
+li {
+    display: block;
+    width:100%; 
+}
+
+ul.nav-menu-list-style {
     margin: 0;
-    padding: 0;
-}
-
-/* Style the caret/arrow */
-.caret {
-    border: 1px solid;
-    cursor: pointer;
-    user-select: none; /* Prevent text selection */
-}
-
-    /* Create the caret/arrow with a unicode, and style it */
-    .caret::before {
-        content: "\25B6";
-        color: black;
-        display: inline-block;
-    }
-
-/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
-.caret-down::before {
-    transform: rotate(90deg);
-}
-
-/* Hide the nested list */
-.nested {
-    display: none;
-}
-
-/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.active {
     display: block;
 }
+
+    ul.nav-menu-list-style .nav-header {
+        border-top: 1px solid #FFFFFF;
+        border-bottom: 1px solid #e8e8e8;
+        display: block;
+        margin: 0;
+        line-height: 42px;
+        padding: 0 8px;
+        font-weight: 600;
+    }
+
+    ul.nav-menu-list-style > li {
+        position: relative;
+     }
+
+        ul.nav-menu-list-style > li a {
+            border-top: 1px solid #FFFFFF;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 0 10px;
+            line-height: 32px;
+        }
+
+
+ul.nav-menu-list-style {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+    ul.nav-menu-list-style li .badge, ul.nav-menu-list-style li .pull-right, ul.nav-menu-list-style li span.badge, ul.nav-menu-list-style li label.badge {
+        float: right;
+        margin-top: 7px;
+    }
+
+ul.bullets {
+    list-style: inside disc
+}
+
+ul.numerics {
+    list-style: inside decimal
+}
+ 
+
+ul.kas-icon-aero li a:before {
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    content: "\e258";
+    padding-right: 8px;
+}
+
