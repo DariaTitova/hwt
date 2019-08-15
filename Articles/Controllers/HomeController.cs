@@ -17,15 +17,33 @@ namespace Articles.Controllers
         ISession session;
         public HomeController()
         {
+            //IKernel ninjectKernel = new StandardKernel();
+
+            ////ninjectKernel.Bind<IParentItem>().To<CatalogesItems>()
+            ////      // .WithConstructorArgument("cataloge", session.Query<Cataloges>().Where(c => c.Parent == null).ToList());
+            ////       .WithConstructorArgument("cataloge", new Cataloges());
+
+            //ninjectKernel.Bind<List<IParentItem>>().To<List<CatalogesItems>>()
+            //    .WithConstructorArgument("cataloge", session.Query<Cataloges>());
+
+            ////Kernel.Bind<IPersistenceStrategy<User>>().To<DynamoDBStrategy<User>>();
+
+
+            
+          
+          
+
             session = NHibernateHelper.OpenSession();
             roots = new List<IParentItem>();
-            IKernel ninjectKernel = new StandardKernel();
-            foreach(var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
-            {
-                ninjectKernel.Bind<IParentItem>().To<CatalogesItems>()
-                   .WithConstructorArgument("cataloge", cataloge);
-                roots.Add(ninjectKernel.Get<IParentItem>());
+
+            foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
+            {             
+             roots.Add(new CatalogesItems(cataloge));
+
             }
+
+
+
 
         }
 

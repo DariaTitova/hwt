@@ -3,21 +3,97 @@
     ViewBag.Title = "Home Page";
 }
 
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-
-<div class="row">
-    <div class="col-md-4">
-        @{Html.RenderPartial("MenyPartial");}
+<div class="container">
+    <div class="row">
+        <div class="well col-md-3" style="  padding: 15px ;  ">
+            @{Html.RenderPartial("MenyPartial");}
+            <div style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
+                <ul class="nav nav-list">
+                    <li>
+                        <label class="tree-toggler nav-header">Header 1</label>
+                        <ul class="nav nav-list tree">
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li>
+                                <label class="tree-toggler nav-header">Header 1.1</label>
+                                <ul class="nav nav-list tree">
+                                    <li><a href="#">Link</a></li>
+                                    <li><a href="#">Link</a></li>
+                                    <li>
+                                        <label class="tree-toggler nav-header">Header 1.1.1</label>
+                                        <ul class="nav nav-list tree">
+                                            <li><a href="#">Link</a></li>
+                                            <li><a href="#">Link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <label class="tree-toggler nav-header">Header 2</label>
+                        <ul class="nav nav-list tree">
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li>
+                                <label class="tree-toggler nav-header">Header 2.1</label>
+                                <ul class="nav nav-list tree">
+                                    <li><a href="#">Link</a></li>
+                                    <li><a href="#">Link</a></li>
+                                    <li>
+                                        <label class="tree-toggler nav-header">Header 2.1.1</label>
+                                        <ul class="nav nav-list tree">
+                                            <li><a href="#">Link</a></li>
+                                            <li><a href="#">Link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <label class="tree-toggler nav-header">Header 2.2</label>
+                                <ul class="nav nav-list tree">
+                                    <li><a href="#">Link</a></li>
+                                    <li><a href="#">Link</a></li>
+                                    <li>
+                                        <label class="tree-toggler nav-header">Header 2.2.1</label>
+                                        <ul class="nav nav-list tree">
+                                            <li><a href="#">Link</a></li>
+                                            <li><a href="#">Link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+         
+        <div class="col-md-7" id="linkResult">
+            @{Html.RenderPartial("Clauses", Model);}
+        </div>
     </div>
-    <div class="col-md-8" id="linkResult">
-        @{Html.RenderPartial("Clauses", Model);}
-    </div>
-
 </div>
+
+ 
 
 
 
 
 <script src="~/Scripts/myjs.js" language="javascript" type="text/javascript"></script>
 <script src="~/Scripts/Openpartitial.js" language="javascript" type="text/javascript"></script>
- 
+
+<script>
+    $(document).ready(function () {
+        $('label.tree-toggler').click(function () {
+            $(this).parent().children('ul.tree').toggle(300);
+        });
+    });
+</script>
+

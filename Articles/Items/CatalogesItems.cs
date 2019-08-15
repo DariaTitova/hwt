@@ -31,7 +31,7 @@ namespace Articles.Items
 
         public string MenyText()
         {
-            return $"<span class='caret'>{cataloge.Name}</span>";
+             return cataloge.Name;
         }
 
         public string Name()

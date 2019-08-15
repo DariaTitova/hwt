@@ -20,7 +20,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 300px;
 }
 
 
@@ -37,6 +37,7 @@ ul, #myUL {
 
 /* Style the caret/arrow */
 .caret {
+    border: 1px solid;
     cursor: pointer;
     user-select: none; /* Prevent text selection */
 }
@@ -46,7 +47,6 @@ ul, #myUL {
         content: "\25B6";
         color: black;
         display: inline-block;
-        margin-right: 6px;
     }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
