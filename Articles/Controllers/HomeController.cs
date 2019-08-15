@@ -63,6 +63,14 @@ namespace Articles.Controllers
             return PartialView("Clauses", model);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> CreateClauses(string ClausesId)
+        {
+            var Id = int.Parse(ClausesId);
+            var model = await this.GetView(Id);
+            return PartialView("Clauses", model);
+        }
+
 
         private async Task<Clauses> GetView(int ClausesId = 0)
         {

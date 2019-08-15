@@ -4,12 +4,28 @@ using Articles.Models;
 
 namespace Articles.Items
 {
-    public class ClausesItems : IMenyItem , IShownItem
+    public class ClausesItems : IMenyItem , IShownItem, IEditableItem
     {
         private Clauses clause;
         public ClausesItems(Clauses clause)
         {
             this.clause = clause;
+        }
+
+        public string ChangeView()
+        {
+            return "/Clauses/Edit?clausesId=" + clause.Id;
+        }
+
+        public string CreateView()
+        {
+            return "/Clauses/Create";
+        }
+
+
+        public string DeleteView()
+        {
+            return "/Clauses/Delete?clausesId=" + clause.Id;
         }
 
         public string MenyText()
@@ -22,10 +38,8 @@ namespace Articles.Items
             return "cтатья";
         }
 
- 
-        public string View()
+        public string ShowView()
         {
- 
             return "/Home/Clauses?clausesId=" + clause.Id;
         }
     }

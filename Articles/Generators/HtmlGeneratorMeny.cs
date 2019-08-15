@@ -32,33 +32,6 @@ namespace Articles.Interfaces
             return returnHtml.ToString();
         }
 
-
-        // <li>
-        //    <label class="tree-toggle nav-header glyphicon-icon-rpad">
-        //        <span class="glyphicon glyphicon-folder-close m5"></span>Bootstrap
-        //        <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span>
-        //    </label>
-        //    <ul class="nav nav-list tree bullets">
-        //        <li><a href = "#" > JavaScript </ a ></ li >
-        //        < li >< a href="#">CSS<span class="badge">42</span></a></li>
-        //        <li>
-        //            <label class="tree-toggle nav-header">Buttons</label>
-        //            <ul class="nav nav-list tree">
-        //                <li><a href = "#" > Colors </ a ></ li >
-        //                < li >< a href="#">Sizes</a></li>
-        //                <li>
-        //                    <label class="tree-toggle nav-header">Forms</label>
-        //                    <ul class="nav nav-list tree">
-        //                        <li><a href = "#" > Horizontal </ a ></ li >
-        //                        < li >< a href="#">Vertical</a></li>
-        //                    </ul>
-        //                </li>
-        //            </ul>
-        //        </li>
-        //    </ul>
-        //</li>
-        //<li class="divider"></li>
-
         //IParentItem для элементов, у которых есть вложенные элементы
         //IShownItm для элементов, которые можно открывать в правом окне
         //IEditebleItem для элементов, которые можно редактировать
@@ -76,10 +49,9 @@ namespace Articles.Interfaces
                 htmlTag = ChildTag(item);
             }
 
-            if (item is IShownItem)
+            if (item is IShownItem shown)
             {
-                IShownItem shown = (IShownItem)item;
-                htmlTag.MergeAttribute("onclick", "openPartial('"+shown.View()+"')");
+                htmlTag.MergeAttribute("onclick", "openPartial('" + shown.ShowView() + "')");
             }
 
             if (item is IEditableItem)

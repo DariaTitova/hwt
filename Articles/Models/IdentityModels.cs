@@ -29,5 +29,7 @@ namespace Articles.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Articles.Models.Clauses> Clauses { get; set; }
     }
 }
