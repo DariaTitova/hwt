@@ -26,7 +26,7 @@ namespace Articles.Interfaces
 
                     var divider = new TagBuilder("li");
                     divider.AddCssClass("divider");
-                    returnHtml.Append ( divider);
+                    returnHtml.Append(divider);
                 }
 
             return returnHtml.ToString();
@@ -37,29 +37,15 @@ namespace Articles.Interfaces
         //IEditebleItem для элементов, которые можно редактировать
         private string BuildHtml(IMenyItem item)
         {
-            TagBuilder htmlTag;
-
-            if (item is IParentItem)
-            {
-                htmlTag= ParentTag((IParentItem)item);
-
-            }
-            else
-            {
-                htmlTag = ChildTag(item);
-            }
-
-            if (item is IShownItem shown)
-            {
-                htmlTag.MergeAttribute("onclick", "openPartial('" + shown.ShowView() + "')");
-            }
+            TagBuilder htmlTag = (item is IParentItem) ? ParentTag((IParentItem)item) : ChildTag(item);
+                                    
+          
 
             if (item is IEditableItem)
             {
-                htmlTag.InnerHtml += ButtonEdit();
-                htmlTag.InnerHtml += ButtonDelete();
+                htmlTag.InnerHtml += ButtonEdit((IEditableItem)item);
+                htmlTag.InnerHtml += ButtonDelete((IEditableItem)item);
             }
-           
 
             return htmlTag.ToString();
         }
@@ -84,7 +70,7 @@ namespace Articles.Interfaces
 
             return tag;
 
-         }
+        }
 
 
         private TagBuilder ChildTag(IMenyItem item)
@@ -95,52 +81,40 @@ namespace Articles.Interfaces
             a.MergeAttribute("href", "#");
             a.SetInnerText(item.MenyText());
 
+            if (item is IShownItem shown)
+            {
+                a.MergeAttribute("onclick", "openPartial('" + shown.ShowView() + "')");
+            }
+
             tag.InnerHtml += a;
 
             return tag;
         }
 
 
-        private TagBuilder ButtonEdit()
+
+        private TagBuilder ButtonEdit(IEditableItem item)
         {
-            var ptag = new TagBuilder("p");
-            ptag.MergeAttribute("data - toggle", "tooltip");
-            ptag.MergeAttribute("title", "Изменить");
-
-
-            var buttontag = new TagBuilder("button");
-            buttontag.AddCssClass("btn btn-primary btn-xs");
-            buttontag.MergeAttribute("data-title", "Изменить");
-            buttontag.MergeAttribute("data-toggle", "modal");
-            buttontag.MergeAttribute("data-target", "#edit");
-
-            var spantag = new TagBuilder("span");
-            spantag.AddCssClass("glyphicon glyphicon-pencil");
-
-            buttontag.InnerHtml += spantag;
-
-            ptag.InnerHtml += buttontag;
-
-            return ptag;
+            return ButtonBuilder("primary", item.ChangeView(), "pencil");
         }
 
-        private TagBuilder ButtonDelete()
+        private TagBuilder ButtonDelete(IEditableItem item)
         {
-   
+            return ButtonBuilder("danger", item.DeleteView(), "trash");
+        }
 
+        private TagBuilder ButtonBuilder(string color, string onClickHref, string icon )
+        {
+            var buttontag = new TagBuilder("p");
+            buttontag.AddCssClass($"btn btn-{color} btn-xs");
+            buttontag.MergeAttribute("onclick", "openPartial('" + onClickHref + "')");
 
-            var buttontag = new TagBuilder("button");
-            buttontag.AddCssClass("btn btn-danger btn-xs");//
-            buttontag.MergeAttribute("data-title", "Удалить");//
-            buttontag.MergeAttribute("data-toggle", "modal");
-            buttontag.MergeAttribute("data-target", "#delete");//
 
             var spantag = new TagBuilder("span");
-            spantag.AddCssClass("glyphicon glyphicon-trash");//
+            spantag.AddCssClass($"glyphicon glyphicon-{icon}");
 
             buttontag.InnerHtml += spantag;
 
- 
             return buttontag;
         }
 

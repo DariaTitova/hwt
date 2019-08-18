@@ -210,6 +210,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CatalogesController.cs" />
     <Compile Include="Controllers\ClausesController.cs" />
     <Compile Include="Generators\HtmlGeneratorMeny.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -339,10 +340,12 @@
     <Content Include="Views\Home\Clauses.cshtml" />
     <Content Include="Views\Home\MenyPartial.cshtml" />
     <Content Include="Views\Clauses\Create.cshtml" />
-    <Content Include="Views\Clauses\Delete.cshtml" />
-    <Content Include="Views\Clauses\Details.cshtml" />
     <Content Include="Views\Clauses\Edit.cshtml" />
-    <Content Include="Views\Clauses\Index.cshtml" />
+    <Content Include="Views\Cataloges\Create.cshtml" />
+    <Content Include="Views\Cataloges\Delete.cshtml" />
+    <Content Include="Views\Cataloges\Details.cshtml" />
+    <Content Include="Views\Cataloges\Edit.cshtml" />
+    <Content Include="Views\Cataloges\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

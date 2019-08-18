@@ -31,5 +31,7 @@ namespace Articles.Models
         }
 
         public System.Data.Entity.DbSet<Articles.Models.Clauses> Clauses { get; set; }
+
+        public System.Data.Entity.DbSet<Articles.Models.Cataloges> Cataloges { get; set; }
     }
 }

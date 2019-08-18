@@ -28,23 +28,8 @@ namespace Articles.Controllers
 
             ////Kernel.Bind<IPersistenceStrategy<User>>().To<DynamoDBStrategy<User>>();
 
-
-            
-          
-          
-
             session = NHibernateHelper.OpenSession();
-            roots = new List<IParentItem>();
-
-            foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
-            {             
-             roots.Add(new CatalogesItems(cataloge));
-
-            }
-
-
-
-
+            UpdateMenu();
         }
 
         [HttpGet]
@@ -53,6 +38,20 @@ namespace Articles.Controllers
             var model = await this.GetView();
             return this.View(model);
          }
+
+        [System.Web.Services.WebMethod]
+        private void UpdateMenu()
+        {
+            roots = new List<IParentItem>();
+
+            foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
+            {
+                roots.Add(new CatalogesItems(cataloge));
+            }
+
+            HtmlGeneratorMeny generator = new HtmlGeneratorMeny(roots);
+            ViewBag.Meny = new HtmlString(generator.GenerateMeny());
+        }
 
 
         [HttpGet]
@@ -71,25 +70,9 @@ namespace Articles.Controllers
             return PartialView("Clauses", model);
         }
 
-
         private async Task<Clauses> GetView(int ClausesId = 0)
         {
-            UpdateMenu();
-            return FindClauses(ClausesId); 
+            return session.Query<Clauses>().Where(c => c.Id == ClausesId).FirstOrDefault();
         }
-
-        private void UpdateMenu()
-        {
-            HtmlGeneratorMeny generator = new HtmlGeneratorMeny(roots);
-            ViewBag.Meny = new HtmlString(generator.GenerateMeny());
-        }
-
-        private Clauses FindClauses(int id)
-        {
-            return session.Query<Clauses>().Where(c => c.Id == id).FirstOrDefault();
-        }
-
-
-
     }
 }
