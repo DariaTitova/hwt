@@ -24,9 +24,9 @@ namespace Articles.Interfaces
                 {
                     returnHtml.Append(BuildHtml(root));
 
-                    var divider = new TagBuilder("li");
-                    divider.AddCssClass("divider");
-                    returnHtml.Append(divider);
+                    //var divider = new TagBuilder("li");
+                    //divider.AddCssClass("divider");
+                    //returnHtml.Append(divider);
                 }
 
             return returnHtml.ToString();
@@ -43,8 +43,12 @@ namespace Articles.Interfaces
 
             if (item is IEditableItem)
             {
-                htmlTag.InnerHtml += ButtonEdit((IEditableItem)item);
-                htmlTag.InnerHtml += ButtonDelete((IEditableItem)item);
+                TagBuilder editTag = new TagBuilder("a");
+                //editTag.AddCssClass("col-md-4");
+                editTag.InnerHtml += ButtonEdit((IEditableItem)item);
+                editTag.InnerHtml += ButtonDelete((IEditableItem)item);
+
+                htmlTag.InnerHtml += editTag;
             }
 
             return htmlTag.ToString();
@@ -54,9 +58,9 @@ namespace Articles.Interfaces
         {
 
             var tag = new TagBuilder("li");
-
+ 
             var label = new TagBuilder("label");
-            label.AddCssClass("tree-toggle nav-header glyphicon-icon-rpad");
+            label.AddCssClass("tree-toggle nav-header glyphicon-icon-rpad   ");
             label.SetInnerText(parent.MenyText());
             tag.InnerHtml += label;
 
@@ -76,9 +80,11 @@ namespace Articles.Interfaces
         private TagBuilder ChildTag(IMenyItem item)
         {
             var tag = new TagBuilder("li");
+ 
 
             var a = new TagBuilder("a");
             a.MergeAttribute("href", "#");
+            a.AddCssClass("col-md-4");
             a.SetInnerText(item.MenyText());
 
             if (item is IShownItem shown)
@@ -105,7 +111,7 @@ namespace Articles.Interfaces
 
         private TagBuilder ButtonBuilder(string color, string onClickHref, string icon )
         {
-            var buttontag = new TagBuilder("p");
+            var buttontag = new TagBuilder("a");
             buttontag.AddCssClass($"btn btn-{color} btn-xs");
             buttontag.MergeAttribute("onclick", "openPartial('" + onClickHref + "')");
 
