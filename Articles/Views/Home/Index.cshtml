@@ -3,9 +3,6 @@
     ViewBag.Title = "Home Page";
 }
 
-
-
-
 <div class="row">
     <div class="col-md-4" id="menyPartial">
         <div class="well no-padding">
@@ -15,46 +12,12 @@
         </div>
     </div>
 
-
     <div class="col-md-7" id="linkResult" style="padding:20px;">
         @{
             Html.RenderPartial("Clauses", Model);
         }
     </div>
-
 </div>
-
-<button id="button">click!</button>
-
-
-
-
-
-
-
-<div id="myModalBox" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Заголовок модального окна</h4>
-
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-
-            <div class="modal-body" id="ModalView">
-                @* @{Html.RenderPartial("Clauses", Model);}*@
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Сохранить изменения</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="~/Scripts/Openpartitial.js" language="javascript" type="text/javascript"></script>
