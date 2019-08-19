@@ -347,9 +347,7 @@
     <Content Include="Views\Clauses\Edit.cshtml" />
     <Content Include="Views\Cataloges\Create.cshtml" />
     <Content Include="Views\Cataloges\Delete.cshtml" />
-    <Content Include="Views\Cataloges\Details.cshtml" />
     <Content Include="Views\Cataloges\Edit.cshtml" />
-    <Content Include="Views\Cataloges\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
