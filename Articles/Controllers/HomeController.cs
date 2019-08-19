@@ -3,6 +3,7 @@ using Articles.Items;
 using Articles.Models;
 using NHibernate;
 using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,13 +32,32 @@ namespace Articles.Controllers
             session = NHibernateHelper.OpenSession();
         }
 
+
         [HttpGet]
         public async Task<ActionResult> Index()
         {
             var model = await this.GetView();
             UpdateMenu();
+            FindAllEditable();
             return this.View(model);
          }
+
+        private void FindAllEditable()
+        {
+            var list = new Dictionary<string, string>();
+            foreach (Type t in this.GetType().Assembly.GetTypes())
+                if (t is IEditableItem)
+                {
+                   // list.Add(t,(IEditableItem)t.);
+                }
+
+
+
+            if (list.Count>0)
+            {
+                ViewBag.Createble = list;
+            }
+        }
 
         [System.Web.Services.WebMethod]
         private void UpdateMenu()

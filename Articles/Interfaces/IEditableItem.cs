@@ -1,6 +1,6 @@
 ﻿namespace Articles.Interfaces
 {
-    interface IEditableItem
+    interface IEditableItem:IMenyItem
     {
         string DeleteView();
         string CreateView();

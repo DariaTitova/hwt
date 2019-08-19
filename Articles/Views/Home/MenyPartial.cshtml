@@ -2,7 +2,22 @@
     <ul class="nav nav-list nav-menu-list-style">
 
         <li>
-            <a href="#">Добавить</a>
+            @if (ViewBag.Createble != null)
+            {
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                  Добавить
+                </button>
+                <ul class="dropdown-menu">
+                    @foreach (var create in ViewBag.Createble)
+                    {
+                        <li><a href="@create.Value">@create.Key</a></li>
+
+                    }
+                </ul>
+            </div>
+            }
+
         </li>
 
 
