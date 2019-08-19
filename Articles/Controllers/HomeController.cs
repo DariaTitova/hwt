@@ -29,13 +29,13 @@ namespace Articles.Controllers
             ////Kernel.Bind<IPersistenceStrategy<User>>().To<DynamoDBStrategy<User>>();
 
             session = NHibernateHelper.OpenSession();
-            UpdateMenu();
         }
 
         [HttpGet]
         public async Task<ActionResult> Index()
         {
             var model = await this.GetView();
+            UpdateMenu();
             return this.View(model);
          }
 

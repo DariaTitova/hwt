@@ -26,6 +26,7 @@ namespace Articles.Models
         [Required(ErrorMessage = "Текст должен быть установлен")]
         [StringLength(1500, ErrorMessage = "Длина строки должна быть до 1500 символов")]
         [DisplayName("Текст")]
+        [DataType(DataType.MultilineText)]
         public virtual string Text { get; set; }
 
         [ManyToOne(Name = "Cataloges", Column = "IdParent",

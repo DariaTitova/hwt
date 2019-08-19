@@ -48,6 +48,8 @@ namespace Articles.Controllers
         }
 
         [HttpPost]
+        [System.Web.Services.WebMethod]
+
         public ActionResult EditConfirm([Bind(Include = "Id,Name,Text")] Clauses clauses, int IdParent)
         {
             if (ModelState.IsValid)
