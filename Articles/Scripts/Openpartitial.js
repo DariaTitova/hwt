@@ -20,4 +20,8 @@ function openModal(view) {
     $("#ModalView").load(view);
 }
 
+
+function updateMeny() {
+    PageMethods.UpdateMeny();
+}
  

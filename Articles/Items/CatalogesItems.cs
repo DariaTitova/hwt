@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Articles.Items
 {
-    public class CatalogesItems : IParentItem
+    public class CatalogesItems : IParentItem, IEditableItem
     {
         private Cataloges cataloge;
         private ICollection<IMenyItem> children;
@@ -24,9 +24,24 @@ namespace Articles.Items
             children.Add(child);
         }
 
+        public string ChangeView()
+        {
+            return "/Cataloges/Edit/" + cataloge.Id;
+        }
+
         public int Count()
         {
             return children.Count();
+        }
+
+        public string CreateView()
+        {
+            return "/Cataloges/Create";
+        }
+
+        public string DeleteView()
+        {
+            return "/Cataloges/Delete/" + cataloge.Id;
         }
 
         public string MenyText()

@@ -14,7 +14,7 @@ namespace Articles.Items
 
         public string ChangeView()
         {
-            return "/Clauses/Edit?clausesId=" + clause.Id;
+            return "/Clauses/Edit/" + clause.Id;
         }
 
         public string CreateView()
@@ -25,7 +25,7 @@ namespace Articles.Items
 
         public string DeleteView()
         {
-            return "/Clauses/Delete?clausesId=" + clause.Id;
+            return "/Clauses/Delete/" + clause.Id;
         }
 
         public string MenyText()
