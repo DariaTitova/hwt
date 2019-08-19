@@ -8,7 +8,7 @@ namespace Articles.Interfaces
     public class HtmlGeneratorMeny
     {
         private readonly List<IParentItem> rootsItems;
-
+        public bool ShowEdit = true;
 
         public HtmlGeneratorMeny(List<IParentItem> root)
         {
@@ -23,12 +23,7 @@ namespace Articles.Interfaces
                 foreach (var root in rootsItems)
                 {
                     returnHtml.Append(BuildHtml(root));
-
-                    //var divider = new TagBuilder("li");
-                    //divider.AddCssClass("divider");
-                    //returnHtml.Append(divider);
                 }
-
             return returnHtml.ToString();
         }
 
@@ -37,54 +32,53 @@ namespace Articles.Interfaces
         //IEditebleItem для элементов, которые можно редактировать
         private string BuildHtml(IMenyItem item)
         {
-            TagBuilder htmlTag = (item is IParentItem) ? ParentTag((IParentItem)item) : ChildTag(item);
-                                    
-          
-
-            if (item is IEditableItem)
-            {
-                TagBuilder editTag = new TagBuilder("a");
-                //editTag.AddCssClass("col-md-4");
-                editTag.InnerHtml += ButtonEdit((IEditableItem)item);
-                editTag.InnerHtml += ButtonDelete((IEditableItem)item);
-
-                htmlTag.InnerHtml += editTag;
-            }
-
-            return htmlTag.ToString();
+            var mainLi = (item is IParentItem) ? ParentTag((IParentItem)item) : ChildTag(item);
+            return mainLi.ToString();
         }
 
         private TagBuilder ParentTag(IParentItem parent)
         {
+            var mainTag = new TagBuilder("li");
 
-            var tag = new TagBuilder("li");
- 
             var label = new TagBuilder("label");
-            label.AddCssClass("tree-toggle nav-header glyphicon-icon-rpad   ");
             label.SetInnerText(parent.MenyText());
-            tag.InnerHtml += label;
+            label.AddCssClass(" nav-header");
 
 
-            TagBuilder innerhtmlTag = new TagBuilder("ul");
-            innerhtmlTag.AddCssClass("nav nav-list tree bullets");
+            var editButtons = new TagBuilder("div");
+
+            if (parent is IEditableItem && ShowEdit)
+                editButtons.InnerHtml += EditTag((IEditableItem)parent);
+
+ 
+
+
+                                          
+            var children = new TagBuilder("ul");
+ 
             foreach (var child in parent.ToList())
-                innerhtmlTag.InnerHtml += BuildHtml(child);
+                children.InnerHtml += BuildHtml(child);
 
-            tag.InnerHtml += innerhtmlTag;
 
-            return tag;
+            mainTag.InnerHtml += SetColoumns(label, editButtons,MakeRow(new TagBuilder("div")));
+            mainTag.InnerHtml += MakeRow(children);
+
+
+
+
+            return mainTag; 
 
         }
 
+
+      
 
         private TagBuilder ChildTag(IMenyItem item)
         {
             var tag = new TagBuilder("li");
  
-
             var a = new TagBuilder("a");
             a.MergeAttribute("href", "#");
-            a.AddCssClass("col-md-4");
             a.SetInnerText(item.MenyText());
 
             if (item is IShownItem shown)
@@ -92,9 +86,46 @@ namespace Articles.Interfaces
                 a.MergeAttribute("onclick", "openPartial('" + shown.ShowView() + "')");
             }
 
-            tag.InnerHtml += a;
+            var editButtons = new TagBuilder("div");
 
+            if (item is IEditableItem&&ShowEdit)
+                editButtons = EditTag((IEditableItem)item);
+
+
+            tag.InnerHtml += SetColoumns(a, editButtons, MakeRow(new TagBuilder("div")));
             return tag;
+        }
+
+        
+
+        private TagBuilder EditTag(IEditableItem item)
+        {
+            var container = new TagBuilder("div");
+            container.AddCssClass("form-group");
+
+
+            container.InnerHtml += ButtonEdit(item);
+            container.InnerHtml += ButtonDelete(item);
+
+            return container;
+
+        }
+
+   
+
+        private TagBuilder MakeRow(TagBuilder tag)
+        {
+            tag.AddCssClass("row");
+            return tag;
+        }
+
+        private TagBuilder SetColoumns(TagBuilder column1, TagBuilder column2, TagBuilder parent)
+        {
+            column1.AddCssClass("col-md-8");
+            column2.AddCssClass("col-md-4");
+            parent.InnerHtml += column1;
+            parent.InnerHtml += column2;
+            return parent;
         }
 
 
@@ -109,7 +140,7 @@ namespace Articles.Interfaces
             return ButtonBuilder("danger", item.DeleteView(), "trash");
         }
 
-        private TagBuilder ButtonBuilder(string color, string onClickHref, string icon )
+        private TagBuilder ButtonBuilder(string color, string onClickHref, string icon)
         {
             var buttontag = new TagBuilder("a");
             buttontag.AddCssClass($"btn btn-{color} btn-xs");
