@@ -1,14 +1,12 @@
 ﻿@model Articles.Models.Clauses
-
 @{
-    ViewBag.Title = "Edit";
+   ViewBag.Title = "Edit";
 }
 
-<asp:ScriptManager ID="ScriptManager2" runat="server" EnablePageMethods="true" />
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
+
+@using (Ajax.BeginForm("EditConfirm", new AjaxOptions { HttpMethod = "Post" }))
+{@Html.AntiForgeryToken()
+
 <div class="form-horizontal">
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -34,18 +32,28 @@
         <div class="col-md-10">
             <div class="form-group">
                 @Html.Hidden("IdParent", Model.Cataloges.Id)
-               
             </div>
-           
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" onclick="updateMeny()" class="btn btn-default" />
+            <input type="submit" value="Изменить" onclick="updateMeny()" class="btn btn-success" />
         </div>
     </div>
+
 </div>
+
+ 
 }
+
+
+
+ 
+
+ 
+
+
+
 
 

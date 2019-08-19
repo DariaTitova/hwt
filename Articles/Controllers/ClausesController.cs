@@ -48,8 +48,7 @@ namespace Articles.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void Edit([Bind(Include = "Id,Name,Text")] Clauses clauses, int IdParent)
+        public ActionResult EditConfirm([Bind(Include = "Id,Name,Text")] Clauses clauses, int IdParent)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +56,9 @@ namespace Articles.Controllers
                 session.Update(clauses, clauses.Id);
                 session.Flush();
             }
-         }
+
+            return PartialView("Clauses","Home");
+        }
 
         protected override void Dispose(bool disposing)
         {
