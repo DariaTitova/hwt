@@ -2,6 +2,7 @@
 using Articles.Items;
 using Articles.Models;
 using NHibernate;
+using Ninject;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,25 +14,14 @@ namespace Articles.Controllers
     {
         static public List<IParentItem> roots = new List<IParentItem>();
          ISession session;
- 
+        IKernel ninjectKernel;
 
          public HomeController()
         {
-            //IKernel ninjectKernel = new StandardKernel();
-
-            ////ninjectKernel.Bind<IParentItem>().To<CatalogesItems>()
-            ////      // .WithConstructorArgument("cataloge", session.Query<Cataloges>().Where(c => c.Parent == null).ToList());
-            ////       .WithConstructorArgument("cataloge", new Cataloges());
-
-            //ninjectKernel.Bind<List<IParentItem>>().To<List<CatalogesItems>>()
-            //    .WithConstructorArgument("cataloge", session.Query<Cataloges>());
-
-            ////Kernel.Bind<IPersistenceStrategy<User>>().To<DynamoDBStrategy<User>>();
 
             session = NHibernateHelper.OpenSession();
-
-
            
+
         }
 
 
@@ -96,10 +86,18 @@ namespace Articles.Controllers
         {
             UpdateAddItems();
 
+            ninjectKernel = new StandardKernel();
+            ninjectKernel.Bind<IParentItem>().To<CatalogesItems>();
+
+
+
             roots = new List<IParentItem>();
             foreach (var cataloge in NHibernateHelper.OpenSession().Query<Cataloges>().Where(c => c.Parent == null).ToList())
             {
-                roots.Add(new CatalogesItems(cataloge));
+                var param = new Ninject.Parameters.ConstructorArgument("cataloge", cataloge);
+                var processor = ninjectKernel.Get<IParentItem>(param);
+
+                roots.Add(processor);
             }
 
             ViewBag.Meny = new HtmlString(new HtmlGeneratorMeny(roots).GenerateMeny(Request.IsAuthenticated));
