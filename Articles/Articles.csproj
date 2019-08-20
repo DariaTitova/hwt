@@ -241,6 +241,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-Articles-20190811111628.mdf" />
+    <Content Include="App_Data\aspnet-Articles-20190811111628_log.ldf">
+      <DependentUpon>aspnet-Articles-20190811111628.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\NameOfDataBase.mdf" />
     <Content Include="App_Data\NameOfDataBase_log.ldf">
       <DependentUpon>NameOfDataBase.mdf</DependentUpon>

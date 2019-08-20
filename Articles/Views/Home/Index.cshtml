@@ -1,36 +1,46 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+  
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <form class="form-inline">
+            @Html.Partial("_LoginPartial")
+            </form>
+    </nav>
 
 <div class="row">
     <div class="col-md-5">
         <div class="well no-padding">
             <div>
                 <ul class="nav nav-list nav-menu-list-style">
-
                     <li>
-                         @if (ViewBag.Createble != null)
-                        {
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Добавить
-                                </button>
-                                <ul class="dropdown-menu">
-                                    @foreach (var create in ViewBag.Createble)
-                                    {
-                                        <li><a href="#" onclick="openPartial('@create.Value')">@create.Key</a></li>
-
-                                    }
-                                </ul>
-                            </div>
-                        }
+                       
 
                     </li>
-                    <li id="menyPartial"     >
-                             @{
-                                Html.RenderPartial("~/Views/Home/MenyPartial.cshtml");
+                    <li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Добавить
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @foreach (var create in ViewBag.Createble)
+                                        {
+                                            <li><a href="#" onclick="openPartial('@create.Value')">@create.Key</a></li>
+
+                                        }
+                                    </ul>
+                                </div>
                             }
-                     </li>
+
+                        </li>
+
+                    <li id="menyPartial">
+                        @{
+                            Html.Partial("MenyPartial");
+                        }
+                    </li>
                 </ul>
             </div>
         </div>

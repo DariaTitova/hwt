@@ -15,8 +15,9 @@ namespace Articles.Interfaces
             this.rootsItems = root;
         }
 
-        public string GenerateMeny()
+        public string GenerateMeny(bool ShowEdit)
         {
+            this.ShowEdit = ShowEdit;
             StringBuilder returnHtml = new StringBuilder();
 
             if (rootsItems!=null && rootsItems.Count > 0)

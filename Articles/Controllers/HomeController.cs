@@ -12,14 +12,10 @@ namespace Articles.Controllers
     public class HomeController : Controller
     {
         static public List<IParentItem> roots = new List<IParentItem>();
-        ISession session;
+         ISession session;
+ 
 
-
-
-
-
-
-        public HomeController()
+         public HomeController()
         {
             //IKernel ninjectKernel = new StandardKernel();
 
@@ -35,27 +31,15 @@ namespace Articles.Controllers
             session = NHibernateHelper.OpenSession();
 
 
-            roots = new List<IParentItem>();
-            foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
-            {
-                roots.Add(new CatalogesItems(cataloge));
-            }
-
-
-
-            UpdateAddItems();
-            UpdateMenu();
+           
         }
 
 
         [HttpGet]
         public ActionResult Index()
         {
-          
-
-
-            UpdateMenu();
-            return View();
+            UpdateAddItems();
+              return View();
         }
 
 
@@ -101,25 +85,27 @@ namespace Articles.Controllers
 
             ViewBag.Createble = list;
 
-            ViewBag.Check = "privat";
 
         }
 
 
 
-        [System.Web.Services.WebMethod]
-        private void UpdateMenu()
-        {
-           
-            ViewBag.Meny = new HtmlString(new HtmlGeneratorMeny(roots).GenerateMeny());
-        }
-
+      
         [System.Web.Services.WebMethod]
         public ActionResult MenyPartial()
         {
             UpdateAddItems();
-            UpdateMenu();
-            return PartialView("MenyPartial");
+
+            roots = new List<IParentItem>();
+            foreach (var cataloge in NHibernateHelper.OpenSession().Query<Cataloges>().Where(c => c.Parent == null).ToList())
+            {
+                roots.Add(new CatalogesItems(cataloge));
+            }
+
+            ViewBag.Meny = new HtmlString(new HtmlGeneratorMeny(roots).GenerateMeny(Request.IsAuthenticated));
+
+
+             return PartialView("MenyPartial");
         }
 
     }

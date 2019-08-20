@@ -8,7 +8,9 @@ function updateMeny() {
     $('#menyPartial').load('/Home/MenyPartial');
 }
 
+
+$('#menyPartial').load('/Home/MenyPartial');
 $('.dropdown-toggle').dropdown();
 
-var deleteLinkObj;
+
     
