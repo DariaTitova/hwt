@@ -94,31 +94,36 @@ namespace Articles.Controllers
             return  PartialView("~/Views/Clauses/ClausesShow.cshtml");
         }
 
-        // public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Cataloges cataloges = db.Cataloges.Find(id);
-        //    if (cataloges == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(cataloges);
-        //}
 
-        //// POST: Cataloges/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Cataloges cataloges = db.Cataloges.Find(id);
-        //    db.Cataloges.Remove(cataloges);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Cataloges clauses = session.Query<Cataloges>().Where(c => c.Id == id).FirstOrDefault();
+            if (clauses == null)
+            {
+                return HttpNotFound();
+            }
+            return View(clauses);
+        }
 
+        [HttpPost]
+        public ActionResult DeleteConfirm(int id)
+        {
+
+            Cataloges clauses = session.Query<Cataloges>().Where(c => c.Id == id).FirstOrDefault();
+
+            session.Delete(clauses);
+
+            session.Flush();
+
+            return PartialView("~/Views/Clauses/ClausesShow.cshtml");
+        }
+
+
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)

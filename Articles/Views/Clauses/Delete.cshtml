@@ -1,7 +1,7 @@
-﻿@model Articles.Models.Cataloges
+﻿@model Articles.Models.Clauses
 
 <div id="delete-dialog" title="Confirmation">
-    <p>Подтвердите удаление папки</p>
+    <p>Подтвердите удаление статьи</p>
 
     @using (Ajax.BeginForm("DeleteConfirm",
         new AjaxOptions
@@ -15,7 +15,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="hidden" value="@Model.Id" name="id" />
+            <input type="hidden" value="@Model.Id"   name="id" />
         </div>
     </div>
     <div class="form-group">

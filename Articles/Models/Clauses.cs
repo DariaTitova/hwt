@@ -30,7 +30,7 @@ namespace Articles.Models
         public virtual string Text { get; set; }
 
         [ManyToOne(Name = "Cataloges", Column = "IdParent",
-        ClassType = typeof(Cataloges), Cascade = "save-update")]
+        ClassType = typeof(Cataloges), Cascade = "delete")]
         public virtual Cataloges Cataloges { get; set; }
 
     }

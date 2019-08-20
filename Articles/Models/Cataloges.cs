@@ -37,7 +37,7 @@ namespace Articles.Models
 
         //Родительский элемент
         [ManyToOne(Name = "Parent", Column = "IdParent",
-         ClassType = typeof(Cataloges), Cascade = "save-update")]
+         ClassType = typeof(Cataloges), Cascade = "delete")]
         public virtual Cataloges Parent { get; set; }
 
         //Дочерние элементы
