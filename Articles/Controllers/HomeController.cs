@@ -11,10 +11,14 @@ namespace Articles.Controllers
 {
     public class HomeController : Controller
     {
-        static public List<IParentItem> roots;
+        static public List<IParentItem> roots = new List<IParentItem>();
         ISession session;
 
-        
+
+
+
+
+
         public HomeController()
         {
             //IKernel ninjectKernel = new StandardKernel();
@@ -30,19 +34,27 @@ namespace Articles.Controllers
 
             session = NHibernateHelper.OpenSession();
 
+
             roots = new List<IParentItem>();
             foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
             {
                 roots.Add(new CatalogesItems(cataloge));
             }
+
+
+
+            UpdateAddItems();
+            UpdateMenu();
         }
-         
+
 
         [HttpGet]
-        public  ActionResult Index()
+        public ActionResult Index()
         {
+          
+
+
             UpdateMenu();
-            FindAllEditable();
             return View();
         }
 
@@ -50,10 +62,10 @@ namespace Articles.Controllers
         public static List<IParentItem> GetAllParents()
         {
             var list = new List<IParentItem>();
-            foreach(var parent in roots)
+            foreach (var parent in roots)
             {
                 list.Add(parent);
-                list=list.Concat(GetAllChildren(parent)).ToList();
+                list = list.Concat(GetAllChildren(parent)).ToList();
             }
             return list;
         }
@@ -64,38 +76,51 @@ namespace Articles.Controllers
 
             foreach (var child in parent.ToList())
             {
-                if(child is IParentItem)
+                if (child is IParentItem)
                 {
                     list.Add((IParentItem)child);
-                    list= list.Concat(GetAllChildren((IParentItem)child)).ToList();
+                    list = list.Concat(GetAllChildren((IParentItem)child)).ToList();
                 }
             }
 
             return list;
         }
 
-        private void FindAllEditable()
+
+        [System.Web.Services.WebMethod]
+
+        private void UpdateAddItems()
         {
             //Сдаюсь. я не придумала как это сделать с помощью наследования
-            var list = new Dictionary<string, string>()
+            Dictionary<string, string> list = new Dictionary<string, string>()
             {
                 {CatalogesItems.Name(),CatalogesItems.AddView() },
                 {ClausesItems.Name(),ClausesItems.AddView() }
-            };     
-         
-            if (list.Count > 0)
-            {
-                ViewBag.Createble = list;
-            }
+
+            };
+
+            ViewBag.Createble = list;
+
+            ViewBag.Check = "privat";
+
         }
+
 
 
         [System.Web.Services.WebMethod]
         private void UpdateMenu()
         {
+           
             ViewBag.Meny = new HtmlString(new HtmlGeneratorMeny(roots).GenerateMeny());
         }
 
+        [System.Web.Services.WebMethod]
+        public ActionResult MenyPartial()
+        {
+            UpdateAddItems();
+            UpdateMenu();
+            return PartialView("MenyPartial");
+        }
 
     }
 }

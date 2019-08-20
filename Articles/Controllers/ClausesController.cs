@@ -64,8 +64,6 @@ namespace Articles.Controllers
         }
 
         [HttpPost]
-        [System.Web.Services.WebMethod]
-
         public ActionResult EditConfirm([Bind(Include = "Id,Name,Text")] Clauses clauses, int IdParent)
         {
             if (ModelState.IsValid)
@@ -75,7 +73,7 @@ namespace Articles.Controllers
                 session.Flush();
             }
 
-            return PartialView("Clauses","Home");
+            return PartialView("ClausesShow", clauses);
         }
 
         protected override void Dispose(bool disposing)

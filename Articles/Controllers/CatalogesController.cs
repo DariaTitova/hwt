@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Articles.Interfaces;
 using Articles.Models;
@@ -37,7 +38,7 @@ namespace Articles.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateConfirm([Bind(Include = "Id,Name")] Cataloges cataloges,string idParent)
+        public PartialViewResult CreateConfirm([Bind(Include = "Id,Name")] Cataloges cataloges,string idParent)
         {
             if (ModelState.IsValid)
             {
@@ -45,7 +46,7 @@ namespace Articles.Controllers
                 session.Save(cataloges);
             }
 
-            return View(cataloges);
+            return  PartialView("~/Views/Clauses/ClausesShow.cshtml");
         }
 
         public ActionResult Edit(int? id)
@@ -59,7 +60,7 @@ namespace Articles.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView("Clauses", "Home");
+            return View(catalog);
         }
 
 
@@ -67,7 +68,7 @@ namespace Articles.Controllers
         [ValidateAntiForgeryToken]
         [System.Web.Services.WebMethod]
 
-        public ActionResult EditConfirm([Bind(Include = "Id,Name")] Cataloges cataloges, int IdParent = -1)
+        public  ActionResult EditConfirm([Bind(Include = "Id,Name")] Cataloges cataloges, int IdParent = -1)
         {
             if (ModelState.IsValid)
             {
@@ -75,9 +76,9 @@ namespace Articles.Controllers
                 cataloges.Parent = session.Query<Cataloges>().Where(c => c.Id == IdParent).FirstOrDefault();
                 session.Update(cataloges, cataloges.Id);
                 session.Flush();
-            }
+             }
 
-            return PartialView("Clauses", "Home");
+            return  PartialView("~/Views/Clauses/ClausesShow.cshtml");
         }
 
         // public ActionResult Delete(int? id)

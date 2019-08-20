@@ -19,7 +19,7 @@ namespace Articles.Interfaces
         {
             StringBuilder returnHtml = new StringBuilder();
 
-            if (rootsItems.Count > 0)
+            if (rootsItems!=null && rootsItems.Count > 0)
                 foreach (var root in rootsItems)
                 {
                     returnHtml.Append(BuildHtml(root));
