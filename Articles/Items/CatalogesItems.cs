@@ -52,6 +52,11 @@ namespace Articles.Items
             return "/Cataloges/Delete/" + cataloge.Id;
         }
 
+        public int Id()
+        {
+            return cataloge.Id;
+        }
+
         public string MenyText()
         {
              return cataloge.Name;

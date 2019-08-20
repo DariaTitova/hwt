@@ -14,12 +14,6 @@ namespace Articles.Interfaces
         public string GenerateArticle()
         {
             StringBuilder returnHtml = new StringBuilder();
-            //returnHtml.Append(
-            //    $"<h2>{article.Head()}</h2>"               
-            //    );
-            //returnHtml.Append(
-            //   $"<p>{article.Body()}</p>"
-            //   );
             return returnHtml.ToString();
         }        
     }

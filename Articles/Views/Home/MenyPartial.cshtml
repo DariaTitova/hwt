@@ -11,7 +11,7 @@
                 <ul class="dropdown-menu">
                     @foreach (var create in ViewBag.Createble)
                     {
-                        <li><a href="@create.Value">@create.Key</a></li>
+                        <li><a href="#" onclick="openPartial('@create.Value')">@create.Key</a></li>
 
                     }
                 </ul>

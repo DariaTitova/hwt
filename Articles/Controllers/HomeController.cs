@@ -11,10 +11,10 @@ namespace Articles.Controllers
 {
     public class HomeController : Controller
     {
-        List<IParentItem> roots;
+        static public List<IParentItem> roots;
         ISession session;
 
-
+        
         public HomeController()
         {
             //IKernel ninjectKernel = new StandardKernel();
@@ -29,25 +29,50 @@ namespace Articles.Controllers
             ////Kernel.Bind<IPersistenceStrategy<User>>().To<DynamoDBStrategy<User>>();
 
             session = NHibernateHelper.OpenSession();
-        }
-
-
-        [HttpGet]
-        public  ActionResult Index()
-        {
 
             roots = new List<IParentItem>();
-
             foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
             {
                 roots.Add(new CatalogesItems(cataloge));
             }
+        }
+         
 
+        [HttpGet]
+        public  ActionResult Index()
+        {
             UpdateMenu();
             FindAllEditable();
             return View();
         }
 
+
+        public static List<IParentItem> GetAllParents()
+        {
+            var list = new List<IParentItem>();
+            foreach(var parent in roots)
+            {
+                list.Add(parent);
+                list=list.Concat(GetAllChildren(parent)).ToList();
+            }
+            return list;
+        }
+
+        public static List<IParentItem> GetAllChildren(IParentItem parent)
+        {
+            var list = new List<IParentItem>();
+
+            foreach (var child in parent.ToList())
+            {
+                if(child is IParentItem)
+                {
+                    list.Add((IParentItem)child);
+                    list= list.Concat(GetAllChildren((IParentItem)child)).ToList();
+                }
+            }
+
+            return list;
+        }
 
         private void FindAllEditable()
         {
@@ -70,5 +95,7 @@ namespace Articles.Controllers
         {
             ViewBag.Meny = new HtmlString(new HtmlGeneratorMeny(roots).GenerateMeny());
         }
+
+
     }
 }

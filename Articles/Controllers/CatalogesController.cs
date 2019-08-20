@@ -20,24 +20,28 @@ namespace Articles.Controllers
 
         public ActionResult Create()
         {
-            //IEnumerable<SelectListItem> parents = session.Query<Cataloges>().Select(s=>
-            //{
-            //    var sellist= new SelectListItem();
-            //    sellist.Text = s.MenyText();
-            //    sellist.Value = s.Id;
-            //});
+            var parents = HomeController.GetAllParents()
+                .Select(p =>
+                {
+                    var sellist = new SelectListItem();
+                    sellist.Text = p.MenyText();
+                    sellist.Value = p.Id().ToString();
+                    return sellist;
+                });
 
-            //ViewBag.Parents = 
+
+
+            ViewBag.Parents = parents;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Cataloges cataloges,int idParent)
+        public ActionResult CreateConfirm([Bind(Include = "Id,Name")] Cataloges cataloges,string idParent)
         {
             if (ModelState.IsValid)
             {
-                cataloges.Parent = session.Query<Cataloges>().Where(c => c.Id == idParent).FirstOrDefault();
+                cataloges.Parent = session.Query<Cataloges>().Where(c => c.Id == int.Parse(idParent)).FirstOrDefault();
                 session.Save(cataloges);
             }
 
