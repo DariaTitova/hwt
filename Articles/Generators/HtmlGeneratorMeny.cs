@@ -137,13 +137,13 @@ namespace Articles.Interfaces
 
         private TagBuilder ButtonDelete(IEditableItem item)
         {
-            return ButtonBuilder("danger", item.DeleteView(), "trash");
+            return ButtonBuilder("danger", item.DeleteView(), "trash", "delete - link");
         }
 
-        private TagBuilder ButtonBuilder(string color, string onClickHref, string icon)
+        private TagBuilder ButtonBuilder(string color, string onClickHref, string icon, string classstr="")
         {
             var buttontag = new TagBuilder("a");
-            buttontag.AddCssClass($"btn btn-{color} btn-xs");
+            buttontag.AddCssClass($"btn btn-{color} btn-xs {classstr}");
             buttontag.MergeAttribute("onclick", "openPartial('" + onClickHref + "')");
 
 

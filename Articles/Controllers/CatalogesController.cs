@@ -60,6 +60,19 @@ namespace Articles.Controllers
             {
                 return HttpNotFound();
             }
+
+            var parents = HomeController.GetAllParents()
+       .Select(p =>
+       {
+           var sellist = new SelectListItem();
+           sellist.Text = p.MenyText();
+           sellist.Value = p.Id().ToString();
+           return sellist;
+       });
+
+
+
+            ViewBag.Parents = parents;
             return View(catalog);
         }
 
@@ -68,12 +81,12 @@ namespace Articles.Controllers
         [ValidateAntiForgeryToken]
         [System.Web.Services.WebMethod]
 
-        public  ActionResult EditConfirm([Bind(Include = "Id,Name")] Cataloges cataloges, int IdParent = -1)
+        public  ActionResult EditConfirm([Bind(Include = "Id,Name")] Cataloges cataloges, string idParent)
         {
             if (ModelState.IsValid)
             {
-                if(IdParent!= -1)
-                cataloges.Parent = session.Query<Cataloges>().Where(c => c.Id == IdParent).FirstOrDefault();
+                if(idParent != null)
+                    cataloges.Parent = session.Query<Cataloges>().Where(c => c.Id == int.Parse(idParent)).FirstOrDefault();
                 session.Update(cataloges, cataloges.Id);
                 session.Flush();
              }
