@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -75,14 +76,28 @@ namespace Articles.Controllers
                 return HttpNotFound();
             }
 
-            var parents = HomeController.GetAllParents()
-       .Select(p =>
-       {
-           var sellist = new SelectListItem();
-           sellist.Text = p.MenyText();
-           sellist.Value = p.Id().ToString();
-           return sellist;
-       });
+
+
+            var parents = new List<SelectListItem>();
+        
+
+
+            List<SelectListItem> list = HomeController.GetAllParents()
+               .Where(p => p.Id() != (int)id)
+               .Select(p =>
+               {
+                   var sellist = new SelectListItem();
+                   sellist.Text = p.MenyText();
+                   sellist.Value = p.Id().ToString();
+                    sellist.Selected = (clauses.Cataloges.Id == p.Id());
+
+                   return sellist;
+               }).ToList();
+
+
+
+            parents = parents.Concat(list).ToList();
+
 
 
 
@@ -122,10 +137,11 @@ namespace Articles.Controllers
         [HttpPost]
         public ActionResult DeleteConfirm(int id)
         {
-
-            Clauses clauses = session.Query<Clauses>().Where(c => c.Id == id).FirstOrDefault();
-            session.Delete(clauses);
-            session.Flush();
+            
+                Clauses clauses = session.Query<Clauses>().Where(c => c.Id == id).FirstOrDefault();
+                session.Delete(clauses);
+                session.FlushAsync();
+            
 
             return PartialView("~/Views/Clauses/ClausesShow.cshtml");
         }

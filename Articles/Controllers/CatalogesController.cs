@@ -61,19 +61,41 @@ namespace Articles.Controllers
                 return HttpNotFound();
             }
 
-            var parents = HomeController.GetAllParents()
-       .Select(p =>
-       {
-           var sellist = new SelectListItem();
-           sellist.Text = p.MenyText();
-           sellist.Value = p.Id().ToString();
-           return sellist;
-       });
+
+
+            var root = new SelectListItem();
+            root.Text = "корень";
+            root.Value = "-1";
+            root.Selected = (catalog.Parent == null);
+
+
+            var parents = new List<SelectListItem>()
+            { root};
+
+
+            List<SelectListItem> list = HomeController.GetAllParents()
+               .Where(p => p.Id() != (int)id)
+               .Select(p =>
+               {
+                   var sellist = new SelectListItem();
+                   sellist.Text = p.MenyText();
+                   sellist.Value = p.Id().ToString();
+
+                   if(catalog.Parent != null)
+                   sellist.Selected = (catalog.Parent.Id == p.Id());
+
+                   return sellist;
+               }).ToList();
 
 
 
-            ViewBag.Parents = parents;
-            return View(catalog);
+            parents = parents.Concat(list).ToList();
+
+           
+
+             ViewBag.Parents = parents;
+
+             return View(catalog);
         }
 
 
@@ -85,8 +107,11 @@ namespace Articles.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(idParent != null)
+                if(idParent != null&& int.Parse(idParent) != -1)
+                {
                     cataloges.Parent = session.Query<Cataloges>().Where(c => c.Id == int.Parse(idParent)).FirstOrDefault();
+
+                }
                 session.Update(cataloges, cataloges.Id);
                 session.Flush();
              }
@@ -115,14 +140,65 @@ namespace Articles.Controllers
 
             Cataloges clauses = session.Query<Cataloges>().Where(c => c.Id == id).FirstOrDefault();
 
-            session.Delete(clauses);
 
-            session.Flush();
+                CascadeDelete(clauses);
+
+
+                session.Delete(clauses);
+
+                session.FlushAsync();
+
+
+            if (clauses.Children.Count >0)
+            {
+                session.Delete(clauses.Children.Last());
+                session.FlushAsync();
+            }
+
+            try
+            {
+                if (clauses.Clauses.Count > 0)
+                {
+                    session.Delete(clauses.Clauses.Last());
+                    session.FlushAsync();
+                }
+            }
+            catch
+            {
+
+            }
+
 
             return PartialView("~/Views/Clauses/ClausesShow.cshtml");
         }
 
 
+        private void CascadeDelete(Cataloges cat)
+        {
+            cat.Clauses.DefaultIfEmpty();
+            cat.Children.DefaultIfEmpty();
+
+
+            foreach (var child in cat.Children)
+            {
+                CascadeDelete(child);                
+                session.Delete(child);
+                session.FlushAsync();
+
+            }
+
+            try{
+                foreach (var child in cat.Clauses)
+                {
+                    session.Delete(child);
+                    session.FlushAsync();
+                } }
+            catch
+            {
+
+            }
+
+        }
        
         protected override void Dispose(bool disposing)
         {
