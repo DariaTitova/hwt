@@ -19,7 +19,7 @@ namespace Articles.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(string clausesId)
+        public async Task<ActionResult> ClausesShow(string clausesId)
         {
             var Id = int.Parse(clausesId);
             var model = await this.GetView(Id);
@@ -29,7 +29,7 @@ namespace Articles.Controllers
 
         private async Task<Clauses> GetView(int ClausesId = 0)
         {
-            return session.Query<Clauses>().Where(c => c.Id == ClausesId).FirstOrDefault();
+            return  session.Query<Clauses>().Where(c => c.Id == ClausesId).FirstOrDefault();
         }
 
         public ActionResult Create()

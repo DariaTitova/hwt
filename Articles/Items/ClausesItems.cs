@@ -39,7 +39,7 @@ namespace Articles.Items
 
         public string ShowView()
         {
-            return "/Clauses/Index?clausesId=" + clause.Id;
+            return "/Clauses/ClausesShow?clausesId=" + clause.Id;
         }
     }
 }
