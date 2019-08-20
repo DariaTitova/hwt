@@ -12,6 +12,10 @@ namespace Articles.Items
             this.clause = clause;
         }
 
+        public string MenyText()
+        {
+            return clause.Name;
+        }
 
         public static string AddView()
         {
@@ -27,21 +31,15 @@ namespace Articles.Items
             return "/Clauses/Edit/" + clause.Id;
         }
 
-     
+
         public string DeleteView()
         {
             return "/Clauses/Delete/" + clause.Id;
         }
 
-        public string MenyText()
-        {
-            return clause.Name;
-        }
-
-      
         public string ShowView()
         {
-            return "/Home/Clauses?clausesId=" + clause.Id;
+            return "/Clauses/Index?clausesId=" + clause.Id;
         }
     }
 }

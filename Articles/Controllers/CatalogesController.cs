@@ -1,7 +1,9 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Articles.Interfaces;
 using Articles.Models;
 using NHibernate;
 
@@ -15,21 +17,27 @@ namespace Articles.Controllers
         {
             session = NHibernateHelper.OpenSession();
         }
-    
-
-    
 
         public ActionResult Create()
         {
+            //IEnumerable<SelectListItem> parents = session.Query<Cataloges>().Select(s=>
+            //{
+            //    var sellist= new SelectListItem();
+            //    sellist.Text = s.MenyText();
+            //    sellist.Value = s.Id;
+            //});
+
+            //ViewBag.Parents = 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Cataloges cataloges)
+        public ActionResult Create([Bind(Include = "Id,Name")] Cataloges cataloges,int idParent)
         {
             if (ModelState.IsValid)
             {
+                cataloges.Parent = session.Query<Cataloges>().Where(c => c.Id == idParent).FirstOrDefault();
                 session.Save(cataloges);
             }
 
@@ -47,7 +55,7 @@ namespace Articles.Controllers
             {
                 return HttpNotFound();
             }
-            return View(catalog);
+            return PartialView("Clauses", "Home");
         }
 
 
@@ -65,7 +73,7 @@ namespace Articles.Controllers
                 session.Flush();
             }
 
-            return PartialView("Cataloges", "Home");
+            return PartialView("Clauses", "Home");
         }
 
         // public ActionResult Delete(int? id)

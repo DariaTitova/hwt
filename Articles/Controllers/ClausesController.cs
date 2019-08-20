@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Articles.Models;
 using NHibernate;
@@ -16,6 +17,21 @@ namespace Articles.Controllers
             session = NHibernateHelper.OpenSession();
 
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Index(string clausesId)
+        {
+            var Id = int.Parse(clausesId);
+            var model = await this.GetView(Id);
+            return PartialView("ClausesShow", model);
+        }
+
+
+        private async Task<Clauses> GetView(int ClausesId = 0)
+        {
+            return session.Query<Clauses>().Where(c => c.Id == ClausesId).FirstOrDefault();
+        }
+
         public ActionResult Create()
         {
             return View();

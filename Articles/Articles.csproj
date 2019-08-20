@@ -341,13 +341,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Home\Clauses.cshtml" />
     <Content Include="Views\Home\MenyPartial.cshtml" />
     <Content Include="Views\Clauses\Create.cshtml" />
     <Content Include="Views\Clauses\Edit.cshtml" />
     <Content Include="Views\Cataloges\Create.cshtml" />
     <Content Include="Views\Cataloges\Delete.cshtml" />
     <Content Include="Views\Cataloges\Edit.cshtml" />
+    <Content Include="Views\Home\ClausesShow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

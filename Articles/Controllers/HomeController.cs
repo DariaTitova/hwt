@@ -2,12 +2,8 @@
 using Articles.Items;
 using Articles.Models;
 using NHibernate;
-using Ninject;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +13,8 @@ namespace Articles.Controllers
     {
         List<IParentItem> roots;
         ISession session;
+
+
         public HomeController()
         {
             //IKernel ninjectKernel = new StandardKernel();
@@ -35,12 +33,19 @@ namespace Articles.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public  ActionResult Index()
         {
-            var model = await this.GetView();
+
+            roots = new List<IParentItem>();
+
+            foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
+            {
+                roots.Add(new CatalogesItems(cataloge));
+            }
+
             UpdateMenu();
             FindAllEditable();
-            return this.View(model);
+            return View();
         }
 
 
@@ -63,37 +68,7 @@ namespace Articles.Controllers
         [System.Web.Services.WebMethod]
         private void UpdateMenu()
         {
-            roots = new List<IParentItem>();
-
-            foreach (var cataloge in session.Query<Cataloges>().Where(c => c.Parent == null).ToList())
-            {
-                roots.Add(new CatalogesItems(cataloge));
-            }
-
-            HtmlGeneratorMeny generator = new HtmlGeneratorMeny(roots);
-            ViewBag.Meny = new HtmlString(generator.GenerateMeny());
-        }
-
-
-        public ActionResult MenyPartial()
-        {
-            UpdateMenu();
-            return PartialView("MenyPartial");
-        }
-
-
-        [HttpGet]
-        public async Task<ActionResult> Clauses(string ClausesId)
-        {
-            var Id = int.Parse(ClausesId);
-            var model = await this.GetView(Id);
-            return PartialView("Clauses", model);
-        }
-
-
-        private async Task<Clauses> GetView(int ClausesId = 0)
-        {
-            return session.Query<Clauses>().Where(c => c.Id == ClausesId).FirstOrDefault();
+            ViewBag.Meny = new HtmlString(new HtmlGeneratorMeny(roots).GenerateMeny());
         }
     }
 }

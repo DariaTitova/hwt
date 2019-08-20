@@ -4,7 +4,6 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
 
 @using (Ajax.BeginForm("CreateConfirm", new AjaxOptions { HttpMethod = "Post" }))
 {@Html.AntiForgeryToken()
@@ -13,26 +12,26 @@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
 
+
     <div class="form-group">
-        <div class="col-md-10">
-            <div class="form-group">
-              @*  @Html.Hidden("IdParent", Model.Cataloges.Id)*@
-            </div>
+        @Html.Label("Выберите родительский элемент", htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
+            @Html.DropDownList("idParent", (IEnumerable<SelectListItem>)ViewBag.Parents, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
 
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Сохранить" onclick="updateMeny()" class="btn btn-success" />
+            <input type="submit" value="Создать" onclick="updateMeny()" class="btn btn-success" />
         </div>
     </div>
 </div>
