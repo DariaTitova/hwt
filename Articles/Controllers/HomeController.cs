@@ -6,6 +6,7 @@ using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -40,24 +41,24 @@ namespace Articles.Controllers
             UpdateMenu();
             FindAllEditable();
             return this.View(model);
-         }
+        }
+
 
         private void FindAllEditable()
         {
-            var list = new Dictionary<string, string>();
-            foreach (Type t in this.GetType().Assembly.GetTypes())
-                if (t is IEditableItem)
-                {
-                   // list.Add(t,(IEditableItem)t.);
-                }
-
-
-
-            if (list.Count>0)
+            //Сдаюсь. я не придумала как это сделать с помощью наследования
+            var list = new Dictionary<string, string>()
+            {
+                {CatalogesItems.Name(),CatalogesItems.AddView() },
+                {ClausesItems.Name(),ClausesItems.AddView() }
+            };     
+         
+            if (list.Count > 0)
             {
                 ViewBag.Createble = list;
             }
         }
+
 
         [System.Web.Services.WebMethod]
         private void UpdateMenu()
@@ -84,7 +85,7 @@ namespace Articles.Controllers
         [HttpGet]
         public async Task<ActionResult> Clauses(string ClausesId)
         {
-            var  Id = int.Parse(ClausesId);
+            var Id = int.Parse(ClausesId);
             var model = await this.GetView(Id);
             return PartialView("Clauses", model);
         }

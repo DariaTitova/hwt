@@ -3,6 +3,5 @@
      public interface IMenyItem
     {
         string MenyText();
-        string Name();
     }
 }

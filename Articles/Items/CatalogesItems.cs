@@ -13,12 +13,25 @@ namespace Articles.Items
         public CatalogesItems(Cataloges cataloge)
         {
             this.cataloge = cataloge;
+
             var childrenCataloges = cataloge.Children.Select(ch => new CatalogesItems(ch) as IMenyItem).ToList();
             var childrenClauses = cataloge.Clauses.Select(ch => new ClausesItems(ch) as IMenyItem).ToList();
            
-
             children = childrenClauses.Concat(childrenCataloges).ToList(); 
         }
+
+
+        public static string AddView()
+        {
+            return "/Cataloges/Create/";
+        }
+        public static string Name()
+        {
+            return "каталог";
+        }
+
+
+
         public void Add(IMenyItem child)
         {
             children.Add(child);
@@ -34,11 +47,6 @@ namespace Articles.Items
             return children.Count();
         }
 
-        public string CreateView()
-        {
-            return "/Cataloges/Create";
-        }
-
         public string DeleteView()
         {
             return "/Cataloges/Delete/" + cataloge.Id;
@@ -49,10 +57,7 @@ namespace Articles.Items
              return cataloge.Name;
         }
 
-        public string Name()
-        {
-           return "каталог";
-        }
+       
 
         public void Remove(IMenyItem child)
         {

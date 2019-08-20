@@ -12,17 +12,22 @@ namespace Articles.Items
             this.clause = clause;
         }
 
+
+        public static string AddView()
+        {
+            return "/Clauses/Create";
+        }
+        public static string Name()
+        {
+            return "cтатья";
+        }
+
         public string ChangeView()
         {
             return "/Clauses/Edit/" + clause.Id;
         }
 
-        public string CreateView()
-        {
-            return "/Clauses/Create";
-        }
-
-
+     
         public string DeleteView()
         {
             return "/Clauses/Delete/" + clause.Id;
@@ -33,11 +38,7 @@ namespace Articles.Items
             return clause.Name;
         }
 
-        public string Name()
-        {
-            return "cтатья";
-        }
-
+      
         public string ShowView()
         {
             return "/Home/Clauses?clausesId=" + clause.Id;
